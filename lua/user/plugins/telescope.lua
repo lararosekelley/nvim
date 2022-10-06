@@ -24,8 +24,9 @@ telescope.setup {
 
 map("n", "<leader>fb", ":Telescope buffers<CR>") -- search open buffers
 map("n", "<leader>fc", ":Telescope commands<CR>") -- search and run commands
-map("n", "<leader>ff", ":Telescope find_files<CR>") -- search files in project
-map("n", "<leader>fg", ":Telescope live_grep<CR>") -- search for string
+map("n", "<leader>ff", ":Telescope git_files<CR>") -- search files in project
+map("n", "<leader>fF", ":Telescope find_files<CR>") -- search files in folder 
+map("n", "<leader>fr", ":Telescope live_grep<CR>") -- search for string
 map("n", "<leader>fm", ":Telescope man_pages<CR>") -- search man pages
 map("n", "<leader>fo", ":Telescope oldfiles<CR>") -- search previously open files
 map("n", "<leader>fs", ":Telescope grep_string<CR>") -- search for string under cursor

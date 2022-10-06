@@ -99,6 +99,9 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lua" -- lua support
   use "windwp/nvim-autopairs" -- autopairs
 
+  -- wriing
+  use "ellisonleao/glow.nvim"
+
   -- code snippets
   use "L3MON4D3/LuaSnip" -- snippet engine
   use "rafamadriz/friendly-snippets" -- preconfigured snippet library
