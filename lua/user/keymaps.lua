@@ -5,8 +5,8 @@ map("", ",", "<Nop>")
 vim.g.mapleader = ","
 
 -- mode guide
---   normal = "n"
 --   insert = "i"
+--   normal = "n"
 --   visual = "v"
 --   visual = "x"
 --   term = "t"
@@ -73,12 +73,8 @@ map("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/")
 -- visual mode
 
 -- paste without yanking deleted text
-map("v", "p", '"_dP') 
+map("v", "p", '"_dP')
 
 -- indentation
 map("v", "<Tab>", ">gv")
 map("v", "<S-Tab>", "<gv")
-
--- terminal mode
-
-map("t", "<Esc>", "<C-\\><C-n>")

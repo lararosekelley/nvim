@@ -82,6 +82,9 @@ return packer.startup(function(use)
   -- tree-sitter
   use "nvim-treesitter/nvim-treesitter" -- tree-sitter support
 
+  -- wiki
+  use "vimwiki/vimwiki"
+
   -- user interface
   use "rafi/awesome-vim-colorschemes" -- color schemes
   use "nvim-lualine/lualine.nvim" -- status line
@@ -106,11 +109,17 @@ return packer.startup(function(use)
   use "L3MON4D3/LuaSnip" -- snippet engine
   use "rafamadriz/friendly-snippets" -- preconfigured snippet library
 
-  -- lsp
+  -- lsp and diagnostics
   use "williamboman/nvim-lsp-installer" -- language server installer
   use "neovim/nvim-lspconfig" -- enables lsp
   use "jose-elias-alvarez/null-ls.nvim" -- linting and formatting
   use "RRethy/vim-illuminate" -- highlights uses of word under cursor
+  use {
+    "folke/trouble.nvim", -- diagnostics list
+    requires = {
+      "kyazdani42/nvim-web-devicons", -- file icons
+    },
+  }
 
   -- debugging
   use "mfussenegger/nvim-dap" -- debug adapter protocol client

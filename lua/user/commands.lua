@@ -33,6 +33,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   command = [[ syntax match Comment +\/\/.\+$+ ]]
 })
 
+-- edit neovim config
+vim.api.nvim_create_user_command("Config", ":e ~/.config/nvim/init.lua", { bang = true })
+
 -- recognize more file types
 
 -- json
