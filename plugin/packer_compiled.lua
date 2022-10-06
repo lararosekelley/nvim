@@ -250,6 +250,11 @@ _G.packer_plugins = {
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   ["vim-bbye"] = {
     loaded = true,
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/vim-bbye",
@@ -269,6 +274,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
+  },
+  vimwiki = {
+    loaded = true,
+    path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/vimwiki",
+    url = "https://github.com/vimwiki/vimwiki"
   }
 }
 
