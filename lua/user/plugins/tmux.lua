@@ -2,7 +2,7 @@ local map = require("utils").map
 
 local status_ok, tmux = pcall(require, "nvim-tmux-navigation")
 if not status_ok then
-  return
+	return
 end
 
 map("n", "<C-h>", tmux.NvimTmuxNavigateLeft)
