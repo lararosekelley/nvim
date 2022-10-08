@@ -45,11 +45,11 @@ nvim_tree.setup({
 					symlink_open = "",
 				},
 				git = {
-					unstaged = "",
-					staged = "S",
+					unstaged = "",
+					staged = "✓",
 					unmerged = "",
 					renamed = "➜",
-					untracked = "U",
+					untracked = "",
 					deleted = "",
 					ignored = "◌",
 				},
@@ -67,13 +67,14 @@ nvim_tree.setup({
 		},
 	},
 	view = {
-		width = 30,
+		adaptive_size = true,
 		side = "left",
 		mappings = {
 			list = {
 				{ key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
 				{ key = "h", cb = tree_cb("close_node") },
 				{ key = "v", cb = tree_cb("vsplit") },
+				{ key = "u", action = "dir_up" },
 			},
 		},
 	},
