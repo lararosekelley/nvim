@@ -56,7 +56,8 @@ map("n", "<leader>X", ":.+1,$tabdo :q<CR>")
 
 -- copy and paste
 map("n", "<leader>a", "ggVG") -- select all content in file
-map("n", "<leader>y", "gg\"*yG``") -- copy file content to clipboard
+map("n", "<leader>y", 'gg"*yG``') -- copy file content to clipboard
+map("n", "<leader>yg", ":.GBrowse!<CR>") -- copy link to line in git remote repository
 
 -- remove trailing whitespace from file
 map("n", "<leader>w", ":let _s=@/<Bar>:%s/\\s\\+$//e<Bar>:let @/=_s<Bar><CR>")

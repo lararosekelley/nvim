@@ -5,17 +5,17 @@ vim.g.vimwiki_global_ext = 0
 vim.g.vimwiki_listsyms = "✗○◐●✓"
 
 vim.g.vimwiki_list = {
-  {
-    path = "/run/media/tylucaskelley/Storage/Dropbox/Files/notes/",
-    syntax = "markdown",
-    ext = ".md",
-  }
+	{
+		path = "/run/media/tylucaskelley/Storage/Dropbox/Files/notes/",
+		syntax = "markdown",
+		ext = ".md",
+	},
 }
 
 vim.api.nvim_create_user_command("Notes", "VimwikiIndex", { bang = true })
 vim.api.nvim_create_user_command("Diary", "VimwikiDiaryIndex", { bang = true })
 
-vim.cmd [[
+vim.cmd([[
   augroup VimWikiSettings
     autocmd!
 
@@ -44,7 +44,6 @@ vim.cmd [[
     " change hightlight groups
     autocmd FileType vimwiki highlight link VimwikiBlockquote mkdBlockquote
   augroup end
-]]
-
+]])
 
 map("n", "<leader>n", ":VimwikiIndex<CR>")

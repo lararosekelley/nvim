@@ -134,6 +134,11 @@ _G.packer_plugins = {
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
+  ["fugitive-gitlab.vim"] = {
+    loaded = true,
+    path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/fugitive-gitlab.vim",
+    url = "https://github.com/tpope/fugitive-gitlab.vim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
@@ -240,6 +245,11 @@ _G.packer_plugins = {
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/quick-scope",
     url = "https://github.com/unblevable/quick-scope"
   },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -274,6 +284,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
+  },
+  ["vim-rhubarb"] = {
+    loaded = true,
+    path = "/home/tylucaskelley/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
+    url = "https://github.com/tpope/vim-rhubarb"
   },
   vimwiki = {
     loaded = true,
