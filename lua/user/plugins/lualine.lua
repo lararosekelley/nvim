@@ -3,6 +3,8 @@ if not status_ok then
 	return
 end
 
+local theme = require("lualine.themes.gruvbox")
+
 local no_lsp = "no lsp"
 
 local lsp_name = function()
@@ -40,13 +42,9 @@ local conditions = {
 	end,
 }
 
-local lsp = {
-	lsp_name,
-	icon = "",
-	cond = conditions.has_lsp,
-	color = {
-		gui = "bold",
-	},
+local branch = {
+	"branch",
+	cond = conditions.check_git_workspace,
 }
 
 local diagnostics = {
@@ -60,6 +58,7 @@ local diagnostics = {
 local diff = {
 	"diff",
 	symbols = { added = " ", modified = " ", removed = " " },
+	cond = conditions.check_git_workspace,
 }
 
 local filename = {
@@ -84,20 +83,49 @@ local filetype = {
 
 local location = {
 	"location",
-	padding = 0,
+	padding = {
+		left = 0,
+		right = 1,
+	},
 }
+
+local lsp = {
+	lsp_name,
+	icon = "",
+	cond = conditions.has_lsp,
+}
+
+-- gruvbox colors
+local gray = "#a89984"
+local darkgray = "#3c3836"
+
+-- prevent mode from changing background color
+theme.normal.c.fg = gray
+theme.normal.c.bg = darkgray
+theme.insert.c.fg = gray
+theme.insert.c.bg = darkgray
+theme.visual.c.fg = gray
+theme.visual.c.bg = darkgray
+theme.replace.c.fg = gray
+theme.replace.c.bg = darkgray
+theme.command.c.fg = gray
+theme.command.c.bg = darkgray
+theme.replace.c.fg = gray
+theme.replace.c.bg = darkgray
+theme.inactive.c.fg = gray
+theme.inactive.c.bg = darkgray
 
 lualine.setup({
 	options = {
 		globalstatus = true,
 		icons_enabled = true,
-		theme = "auto",
+		theme = theme,
 		disabled_filetypes = { "alpha", "dashboard" },
 		always_divide_middle = true,
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { "branch" },
+		lualine_b = { branch },
 		lualine_c = { filename, diagnostics },
 		lualine_x = { diff, filesize, filetype, lsp },
 		lualine_y = { location },
