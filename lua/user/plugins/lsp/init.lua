@@ -30,7 +30,7 @@ null_ls.setup({
 	debug = false,
 	sources = {
 		formatting.prettierd.with({
-			extra_filetypes = { "toml" },
+			extra_filetypes = { "toml", "vimwiki" }, -- vimwiki markdown syntax
 		}),
 		formatting.black.with({
 			extra_args = { "--fast" },

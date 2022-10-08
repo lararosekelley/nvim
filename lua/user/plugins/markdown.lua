@@ -9,4 +9,4 @@ glow.setup({
 	style = "dark",
 })
 
-map("n", "<leader>g", ":Glow<CR>")
+map("n", "<leader>P", ":Glow<CR>")
