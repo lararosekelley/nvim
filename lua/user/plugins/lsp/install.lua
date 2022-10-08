@@ -67,5 +67,10 @@ for _, server in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", pyright_opts, opts)
 	end
 
+	if server == "marksman" then
+		local marksman_opts = require("user.plugins.lsp.settings.marksman")
+		opts = vim.tbl_deep_extend("force", marksman_opts, opts)
+	end
+
 	lspconfig[server].setup(opts)
 end
