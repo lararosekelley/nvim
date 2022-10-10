@@ -11,4 +11,4 @@ trouble.setup({
 	auto_preview = false,
 })
 
-map("n", "<C-d>", ":TroubleToggle workspace_diagnostics<CR>") -- toggle diagnostics
+map("n", "<leader>d", ":TroubleToggle workspace_diagnostics<CR>") -- toggle diagnostics
