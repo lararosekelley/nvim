@@ -51,7 +51,7 @@ mason_lspconfig.setup({
 	ensure_installed = servers,
 })
 
-local lspconfig_status_ok, lspconfig = pcall(require, "nvim-lspconfig")
+local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
 	return
 end
