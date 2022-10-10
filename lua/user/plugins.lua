@@ -130,8 +130,13 @@ return packer.startup(function(use)
 	use("rafamadriz/friendly-snippets") -- preconfigured snippet library
 
 	-- lsp and diagnostics
-	use("williamboman/nvim-lsp-installer") -- language server installer
 	use("neovim/nvim-lspconfig") -- enables lsp
+	use({
+		"williamboman/mason-lspconfig.nvim", -- lsp installer
+		requires = {
+			"williamboman/mason.nvim",
+		},
+	})
 	use("jose-elias-alvarez/null-ls.nvim") -- linting and formatting
 	use("RRethy/vim-illuminate") -- highlights uses of word under cursor
 	use({
