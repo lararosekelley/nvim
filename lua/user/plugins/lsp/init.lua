@@ -29,15 +29,27 @@ end
 null_ls.setup({
 	debug = false,
 	sources = {
-		formatting.prettierd.with({
-			extra_filetypes = { "toml", "vimwiki" }, -- vimwiki markdown syntax
+		-- diagnostics
+		diagnostics.flake8.with({
+			prefer_local = ".venv/bin",
 		}),
+		diagnostics.markdownlint.with({
+			extra_filetypes = { "vimwiki" },
+		}),
+		-- formatting
 		formatting.black.with({
 			extra_args = { "--fast" },
+			prefer_local = ".venv/bin",
+		}),
+		formatting.google_java_format,
+		formatting.markdownlint.with({
+			extra_filetypes = { "vimwiki" },
+		}),
+		formatting.prettierd.with({
+			extra_filetypes = { "toml" }, -- vimwiki markdown syntax
+			ignore_filetypes = { "markdown" },
 		}),
 		formatting.stylua,
-		formatting.google_java_format,
-		diagnostics.flake8,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
