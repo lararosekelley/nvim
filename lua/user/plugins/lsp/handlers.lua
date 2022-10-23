@@ -7,7 +7,7 @@ end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
 	local signs = {
@@ -22,7 +22,7 @@ M.setup = function()
 	end
 
 	local config = {
-		virtual_text = true, -- show in-line diagnostics
+		virtual_text = false, -- show in-line diagnostics
 		signs = {
 			active = signs,
 		},

@@ -36,6 +36,15 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 -- edit neovim config
 vim.api.nvim_create_user_command("Config", ":e ~/.config/nvim/init.lua", { bang = true })
 
+-- show diagnostics on cursor hold
+vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+	callback = function()
+		vim.diagnostic.open_float()
+	end,
+})
+
 -- recognize more file types
 
 -- json
