@@ -1,7 +1,7 @@
 return {
 	settings = {
 		preferences = {
-      importModuleSpecifierPreference = "project-relative",
+			importModuleSpecifierPreference = "relative",
 		},
 	},
 }

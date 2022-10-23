@@ -147,3 +147,6 @@ vim.opt.incsearch = true
 -- show tab and status bars
 vim.opt.laststatus = 2
 vim.opt.showtabline = 2
+
+-- update time
+vim.opt.updatetime = 250
