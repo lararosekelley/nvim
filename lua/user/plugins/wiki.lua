@@ -6,7 +6,7 @@ vim.g.vimwiki_listsyms = "✗○◐●✓"
 
 vim.g.vimwiki_list = {
 	{
-		path = "/run/media/tylucaskelley/Storage/Dropbox/Files/notes/",
+		path = "/Users/tylucaskelley/Dropbox/Files/notes/",
 		syntax = "markdown",
 		ext = ".md",
 	},
