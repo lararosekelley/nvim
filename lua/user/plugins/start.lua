@@ -28,6 +28,8 @@ dashboard.section.buttons.val = {
 
 	dashboard.button("t", " " .. " Open terminal", ":ToggleTerm<CR>"),
 
+	dashboard.button("h", " " .. "Run health checks", ":checkhealth<CR>"),
+
 	dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 }
 

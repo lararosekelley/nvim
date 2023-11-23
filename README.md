@@ -21,6 +21,11 @@ Clone this repository to your `~/.config/nvim/` directory:
 git clone git@github.com:tylucaskelley/nvim ~/.config/nvim
 ```
 
+### Fonts
+
+Install a font with support for icons on your system. I recommend using the `getnf`
+utility to install a Nerd font. You can view the [getnf docs here](https://github.com/ronniedroid/getnf).
+
 ## System requirements
 
 - [Neovim 0.8+](https://neovim.io)

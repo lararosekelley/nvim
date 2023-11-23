@@ -5,7 +5,7 @@ end
 
 configs.setup({
 	ensure_installed = "all",
-	ignore_install = {},
+	ignore_install = { "gleam" },
 	highlight = {
 		enable = true,
 		disable = {},
