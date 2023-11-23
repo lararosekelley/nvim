@@ -59,7 +59,8 @@ return packer.startup(function(use)
 		"tpope/vim-fugitive",
 		requires = {
 			"tpope/vim-rhubarb",
-			"tpope/fugitive-gitlab.vim",
+			"shumphrey/fugitive-gitlab.vim",
+			"tommcdo/vim-fubitive",
 		},
 	})
 
@@ -94,8 +95,27 @@ return packer.startup(function(use)
 		end,
 	})
 
+	-- markdown
+	use("preservim/vim-markdown") -- markdown syntax highlighting and rules
+
 	-- tree-sitter
 	use("nvim-treesitter/nvim-treesitter") -- tree-sitter support
+
+	-- refactoring
+	use({
+		"ThePrimeagen/refactoring.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	})
+
+	use({
+		"filipdutescu/renamer.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+		},
+	})
 
 	-- wiki
 	use("vimwiki/vimwiki")

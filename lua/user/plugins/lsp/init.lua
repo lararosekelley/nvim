@@ -45,9 +45,6 @@ null_ls.setup({
 		diagnostics.sqlfluff.with({
 			extra_args = { "--dialect", "postgres" }, -- prefer postgresql
 		}),
-		diagnostics.write_good.with({
-			extra_filetypes = { "vimwiki" },
-		}),
 		-- formatting
 		formatting.black.with({
 			extra_args = { "--fast" },

@@ -22,7 +22,7 @@ map("n", "<leader>tk", "<C-w>t<C-w>K") -- change vertical to horizontal
 map("n", "<leader>th", "<C-w>t<C-w>H") -- change horizontal to vertical
 
 -- reload neovim config
-map("n", "<leader>r", ":so % | echo 'Reloaded Neovim configuration.'<CR>")
+map("n", "<leader>\\", ":so % | echo 'Reloaded Neovim configuration.'<CR>")
 
 -- use arrow keys to navigate history
 map("n", "<Left>", "<C-o>") -- go back

@@ -25,7 +25,7 @@ local servers = {
 	"pyright",
 	"solargraph",
 	"sqlls",
-	"sumneko_lua",
+	"lua_ls",
 	"stylelint_lsp",
 	"svelte",
 	"tailwindcss",
@@ -71,9 +71,9 @@ for _, server in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", pyright_opts, opts)
 	end
 
-	if server == "sumneko_lua" then
-		local sumneko_opts = require("user.plugins.lsp.settings.sumneko_lua")
-		opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+	if server == "lua_ls" then
+		local lua_opts = require("user.plugins.lsp.settings.lua_ls")
+		opts = vim.tbl_deep_extend("force", lua_opts, opts)
 	end
 
 	if server == "tsserver" then
