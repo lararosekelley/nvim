@@ -107,6 +107,7 @@ return packer.startup(function(use)
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-treesitter/nvim-treesitter" },
+			{ "windwp/nvim-ts-autotag" },
 		},
 	})
 
@@ -170,6 +171,17 @@ return packer.startup(function(use)
 	use("mfussenegger/nvim-dap") -- debug adapter protocol client
 	use("rcarriga/nvim-dap-ui") -- dap ui
 	use("ravenxrz/DAPInstall.nvim") -- debugger management
+
+	-- database client
+	use({
+		"kndndrj/nvim-dbee", -- db ui
+		requires = {
+			"MunifTanjim/nui.nvim",
+		},
+		run = function()
+			require("dbee").install()
+		end,
+	})
 
 	-- sets up my configuration after packer.nvim is cloned; leave at end of function
 	if PACKER_BOOTSTRAP then

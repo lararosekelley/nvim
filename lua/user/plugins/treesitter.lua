@@ -10,6 +10,9 @@ configs.setup({
 		enable = true,
 		disable = {},
 	},
+	autotag = {
+		enable = true,
+	},
 	autopairs = {
 		enable = true,
 	},
