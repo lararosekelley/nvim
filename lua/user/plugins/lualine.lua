@@ -3,6 +3,11 @@ if not status_ok then
 	return
 end
 
+local lazy_status_ok, lazy_status = pcall(require, "lazy.status")
+if not lazy_status_ok then
+	return
+end
+
 local theme = require("lualine.themes.gruvbox")
 
 local no_lsp = "no lsp"
@@ -95,6 +100,11 @@ local lsp = {
 	cond = conditions.has_lsp,
 }
 
+local updates = {
+	lazy_status.updates,
+	cond = lazy_status.has_updates,
+}
+
 -- gruvbox colors
 local gray = "#a89984"
 local darkgray = "#3c3836"
@@ -128,7 +138,7 @@ lualine.setup({
 		lualine_b = { branch },
 		lualine_c = { filename, diagnostics },
 		lualine_x = { diff, filesize, filetype, lsp },
-		lualine_y = { location },
-		lualine_z = { "progress" },
+		lualine_y = { updates },
+		lualine_z = { location },
 	},
 })
