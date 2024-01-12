@@ -137,7 +137,7 @@ lualine.setup({
 		lualine_a = { "mode" },
 		lualine_b = { branch },
 		lualine_c = { filename, diagnostics },
-		lualine_x = { diff, filesize, filetype, lsp },
+		lualine_x = { "copilot", diff, filesize, filetype, lsp },
 		lualine_y = { updates },
 		lualine_z = { location },
 	},

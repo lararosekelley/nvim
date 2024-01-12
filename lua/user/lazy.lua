@@ -1,3 +1,4 @@
+local map = require("utils").map
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazy_path) then
@@ -13,13 +14,7 @@ end
 
 vim.opt.rtp:prepend(lazy_path)
 
--- sync plugins when this plugins file is updated
-vim.cmd([[
-  augroup ReloadLazyPlugins
-    autocmd!
-    autocmd BufWritePost lazy.lua source <afile> | Lazy sync
-  augroup end
-]])
+map("n", "<leader>L", ":Lazy<CR>")
 
 -- don't error on first use of lazy
 local status_ok, lazy = pcall(require, "lazy")
@@ -144,6 +139,11 @@ local plugins = {
 	-- code snippets
 	"L3MON4D3/LuaSnip", -- snippet engine
 	"rafamadriz/friendly-snippets", -- preconfigured snippet library
+
+	-- ai
+	"zbirenbaum/copilot.lua", -- replacement for github's copilot.vim
+	"AndreM222/copilot-lualine", -- lualine status
+	"zbirenbaum/copilot-cmp", -- nvim-cmp integration
 
 	-- lsp and diagnostics
 	"neovim/nvim-lspconfig", -- enables lsp

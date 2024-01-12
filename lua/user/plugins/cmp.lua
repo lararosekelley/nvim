@@ -8,6 +8,11 @@ if not snip_status_ok then
 	return
 end
 
+local copilot_status_ok, copilot_cmp = pcall(require, "copilot_cmp")
+if not copilot_status_ok then
+	return
+end
+
 require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
@@ -108,6 +113,7 @@ cmp.setup({
 		end,
 	},
 	sources = {
+		{ name = "copilot" },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
@@ -126,3 +132,5 @@ cmp.setup({
 		ghost_text = true,
 	},
 })
+
+copilot_cmp.setup()
