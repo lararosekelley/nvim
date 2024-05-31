@@ -5,7 +5,7 @@ if not status_ok then
 	return
 end
 
-local trouble_status_ok, trouble_telescope = pcall(require, "trouble.providers.telescope")
+local trouble_status_ok, trouble_telescope = pcall(require, "trouble.sources.telescope")
 if not trouble_status_ok then
 	return
 end
@@ -30,11 +30,11 @@ telescope.setup({
 				["<Up>"] = actions.cycle_history_prev,
 				["<C-j>"] = actions.move_selection_next,
 				["<C-k>"] = actions.move_selection_previous,
-				["<C-d>"] = trouble_telescope.open_with_trouble,
+				["<C-d>"] = trouble_telescope.open,
 				["<C-u"] = false,
 			},
 			n = {
-				["<C-d>"] = trouble_telescope.open_with_trouble,
+				["<C-d>"] = trouble_telescope.open,
 			},
 		},
 	},

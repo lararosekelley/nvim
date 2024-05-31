@@ -31,11 +31,13 @@ local opts = {
 local plugins = {
 	-- color scheme
 	{
-		"rafi/awesome-vim-colorschemes",
+		"sainnhe/everforest",
 		lazy = false,
 		priority = 1000, -- must be highest
 		config = function()
-			vim.cmd([[colorscheme gruvbox]])
+			vim.g.everforest_enable_italic = true
+			vim.g.everforest_background = "hard"
+			vim.cmd.colorscheme("everforest")
 		end,
 	},
 	-- neovim
