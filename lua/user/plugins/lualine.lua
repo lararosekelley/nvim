@@ -8,7 +8,7 @@ if not lazy_status_ok then
 	return
 end
 
-local theme = require("lualine.themes.gruvbox")
+local theme = require("lualine.themes.everforest")
 
 local no_lsp = "no lsp"
 
@@ -105,9 +105,9 @@ local updates = {
 	cond = lazy_status.has_updates,
 }
 
--- gruvbox colors
-local gray = "#a89984"
-local darkgray = "#3c3836"
+-- everforest colors: https://user-images.githubusercontent.com/58662350/214382274-0108806d-b605-4047-af4b-c49ae06a2e8e.png
+local gray = "#bg1"
+local darkgray = "#bg0"
 
 -- prevent mode from changing background color
 theme.normal.c.fg = gray
