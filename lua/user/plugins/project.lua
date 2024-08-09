@@ -4,8 +4,12 @@ if not status_ok then
 end
 
 project.setup({
-	detection_methods = { "lsp", "pattern" },
-	patterns = { ".git", ".hg", ".svn", ".bzr", "Makefile", ".wikiroot", "package.json", "pyproject.toml" },
+	detection_methods = { "pattern", "lsp" },
+	-- package.json omitted to avoid defining a project in every Yarn workspace
+	patterns = { ".git", ".hg", ".svn", ".bzr", "Makefile", ".wikiroot", "pyproject.toml" },
+	silent_chdir = false,
+	scope_chdir = "tab",
+	show_hidden = true,
 })
 
 local tele_status_ok, telescope = pcall(require, "telescope")

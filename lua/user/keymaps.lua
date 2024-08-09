@@ -2,7 +2,9 @@ local map = require("utils").map
 
 -- comma as leader key
 map("", ",", "<Nop>")
+
 vim.g.mapleader = ","
+vim.g.maplocalleader = "\\"
 
 -- mode guide
 --   insert = "i"

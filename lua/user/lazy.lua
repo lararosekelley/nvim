@@ -1,32 +1,31 @@
 local map = require("utils").map
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not vim.loop.fs_stat(lazy_path) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazy_path,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazy_path) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazy_path })
+
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 
 vim.opt.rtp:prepend(lazy_path)
 
-map("n", "<leader>L", ":Lazy<CR>")
+map("n", "<leader>l", ":Lazy<CR>")
 
 -- don't error on first use of lazy
 local status_ok, lazy = pcall(require, "lazy")
 if not status_ok then
 	return
 end
-
-local opts = {
-	checker = {
-		enabled = true,
-	},
-}
 
 local plugins = {
 	-- color scheme
@@ -74,9 +73,9 @@ local plugins = {
 	},
 	"moll/vim-bbye", -- delete buffers
 	{
-		"kyazdani42/nvim-tree.lua", -- file explorer
+		"nvim-tree/nvim-tree.lua", -- file explorer
 		dependencies = {
-			"kyazdani42/nvim-web-devicons", -- file icons
+			"nvim-tree/nvim-web-devicons", -- file icons
 		},
 	},
 	"unblevable/quick-scope", -- fast character finding
@@ -117,7 +116,7 @@ local plugins = {
 	{
 		"nvim-lualine/lualine.nvim", -- status line
 		dependencies = {
-			"kyazdani42/nvim-web-devicons", -- file icons
+			"nvim-tree/nvim-web-devicons", -- file icons
 		},
 	},
 	"akinsho/bufferline.nvim", -- nicer buffer/tab line
@@ -160,7 +159,7 @@ local plugins = {
 	{
 		"folke/trouble.nvim", -- diagnostics list
 		dependencies = {
-			"kyazdani42/nvim-web-devicons", -- file icons
+			"nvim-tree/nvim-web-devicons", -- file icons
 		},
 	},
 
@@ -172,7 +171,6 @@ local plugins = {
 	-- database client
 	{
 		"kndndrj/nvim-dbee", -- db ui
-		version = "v0.1.2", -- TODO: Remove once v0.1.4 is out
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 		},
@@ -182,4 +180,14 @@ local plugins = {
 	},
 }
 
-lazy.setup(plugins, opts)
+lazy.setup({
+	spec = plugins,
+	install = {
+		colorscheme = {
+			"everforest",
+		},
+	},
+	checker = {
+		enabled = true,
+	},
+})
