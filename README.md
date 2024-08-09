@@ -1,4 +1,4 @@
-# tylucsakelley/nvim
+# lararosekelley/nvim
 
 > My Neovim configuration files
 
@@ -18,7 +18,7 @@
 Clone this repository to your `~/.config/nvim/` directory:
 
 ```bash
-git clone git@github.com:tylucaskelley/nvim ~/.config/nvim
+git clone git@github.com:lararosekelley/nvim ~/.config/nvim
 ```
 
 ### Fonts
