@@ -78,7 +78,7 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-	local disable_formatting_clients = { tsserver = true, lua_ls = true }
+	local disable_formatting_clients = { ts_ls = true, lua_ls = true }
 
 	if disable_formatting_clients[client.name] then
 		client.server_capabilities.document_formatting = false
