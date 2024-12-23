@@ -43,16 +43,14 @@ For full LSP support:
 - Ruby (with `gem`)
 - Rust (with `cargo`)
 - PHP (with `composer`)
-- Python 2.7 (with `pip`) installed in `~/.pyenv/versions/neovim2.7/bin/python`
-- Python 3.9 (with `pip3`) installed in `~/.pyenv/versions/neovim3.9/bin/python`
+- Python 3.9 (with `pip3`) installed in `~/.pyenv/versions/neovim3.13/bin/python`
 
 ### Neovim packages
 
 For a few languages, additional "provider" packages are required:
 
 - Node.js - `neovim`
-- Python - `pynvim`
-  - 2 and 3 separately, installed with correct `pyenv` versions above
+- Python - `pynvim` (see above)
 - Ruby - `neovim`
 
 ### Formatting tools
