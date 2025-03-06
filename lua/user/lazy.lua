@@ -30,13 +30,11 @@ end
 local plugins = {
 	-- color scheme
 	{
-		"sainnhe/everforest",
-		lazy = false,
+		"catppuccin/nvim",
+    name = "catppuccin",
 		priority = 1000, -- must be highest
 		config = function()
-			vim.g.everforest_enable_italic = true
-			vim.g.everforest_background = "hard"
-			vim.cmd.colorscheme("everforest")
+			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
 	-- neovim
