@@ -38,7 +38,7 @@ dashboard.section.buttons.val = {
 }
 
 local function footer()
-	return "lararosekelley.com"
+	return "https://larakelley.com"
 end
 
 dashboard.section.footer.val = footer()
