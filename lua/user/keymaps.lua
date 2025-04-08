@@ -41,8 +41,8 @@ map("n", "<leader>v", ":vnew<CR>") -- new vertical split
 map("n", "<leader>h", "<C-w>n") -- new horizontal split
 
 -- tab navigation
-map("n", "<S-h>", "gT")
-map("n", "<S-l>", "gt")
+map("n", "<S-u>", "gT")
+map("n", "<S-i>", "gt")
 
 -- clear highlighting with enter
 map("n", "<CR>", ":noh<CR><CR>")
