@@ -31,7 +31,7 @@ local plugins = {
 	-- color scheme
 	{
 		"catppuccin/nvim",
-    name = "catppuccin",
+		name = "catppuccin",
 		priority = 1000, -- must be highest
 		config = function()
 			vim.cmd.colorscheme("catppuccin")
@@ -143,6 +143,7 @@ local plugins = {
 	"zbirenbaum/copilot.lua", -- replacement for github's copilot.vim
 	"AndreM222/copilot-lualine", -- lualine status
 	"zbirenbaum/copilot-cmp", -- nvim-cmp integration
+	"joshuavial/aider.nvim", -- aider.chat integration
 
 	-- lsp and diagnostics
 	"neovim/nvim-lspconfig", -- enables lsp
