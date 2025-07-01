@@ -15,6 +15,9 @@ local code_actions = null_ls.builtins.code_actions
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 
+local eslint_code_actions = require("none-ls.code_actions.eslint")
+local flake8_diagnostics = require("none-ls.diagnostics.flake8")
+
 local augroup = vim.api.nvim_create_augroup("LspFormatOnSave", {})
 
 -- only format with null-ls
@@ -31,17 +34,16 @@ null_ls.setup({
 	debug = true,
 	sources = {
 		-- code actions
-		code_actions.eslint.with({
+		eslint_code_actions.with({
 			prefer_local = "node_modules/.bin",
 		}),
 		-- diagnostics
-		diagnostics.flake8.with({
+		flake8_diagnostics.with({
 			prefer_local = ".venv/bin",
 		}),
 		diagnostics.markdownlint.with({
 			extra_filetypes = { "vimwiki" },
 		}),
-		diagnostics.shellcheck,
 		diagnostics.sqlfluff.with({
 			extra_args = { "--dialect", "postgres" }, -- prefer postgresql
 		}),

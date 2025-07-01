@@ -153,7 +153,12 @@ local plugins = {
 			"williamboman/mason.nvim",
 		},
 	},
-	"jose-elias-alvarez/null-ls.nvim", -- linting and formatting
+	{
+		"nvimtools/none-ls.nvim", -- linting and formatting (replacement for archived null-ls)
+		dependencies = {
+			"nvimtools/none-ls-extras.nvim",
+		},
+	},
 	"RRethy/vim-illuminate", -- highlights uses of word under cursor
 	{
 		"folke/trouble.nvim", -- diagnostics list
