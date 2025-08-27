@@ -1,8 +1,10 @@
 --- Browse and search help docs, keymaps, LSP symbols, diagnostics, git, files, and more
 ---
 --- Author: @lararosekelley
---- Last Modified: August 23rd, 2025
+--- Last Modified: August 27th, 2025
 
+local Snacks = require("snacks")
+local icons = require("config.icons").icons.whichkey
 local plugin_enabled = require("utils").plugin_enabled
 
 return {
@@ -16,38 +18,40 @@ return {
       spec = {
         {
           mode = { "n", "v" },
+          { "<leader>A", group = "AI", icon = { icon = icons.ai, color = "pink" } },
           { "<leader>c", group = "Code Actions" },
-          { "<leader>d", group = "Diagnostics / Debug", icon = { icon = "󱖫 ", color = "green" } },
-          { "<leader>f", group = "Find", icon = { icon = "󰥨 ", color = "green" } },
+          { "<leader>d", group = "Diagnostics / Debug", icon = { icon = icons.diagnostics, color = "green" } },
+          { "<leader>f", group = "Find", icon = { icon = icons.find, color = "green" } },
           { "<leader>g", group = "Git" },
-          { "<leader>l", group = "LSP", icon = { icon = "󰒋 ", color = "purple" } },
-          { "<leader>s", group = "Search", icon = { icon = " ", color = "green" } },
-          { "<leader>u", group = "UI", icon = { icon = "󰙵 ", color = "cyan" } },
-          { "<leader>q", group = "Session", icon = { icon = "󰍩 ", color = "orange" } },
-          { "<leader>A", group = "AI", icon = { icon = " ", color = "pink" } },
-          { "d", group = "Delete", icon = { icon = " ", color = "red" } },
-          { "[", group = "Prev", icon = { icon = " ", color = "blue" } },
-          { "]", group = "Next", icon = { icon = " ", color = "blue" } },
-          { "g", group = "Goto", icon = { icon = "󰈇 ", color = "yellow" } },
-          { "gs", group = "Surround", icon = { icon = "󰅪 ", color = "orange" } },
-          { "z", group = "Fold", icon = { icon = " ", color = "orange" } },
+          { "<leader>l", group = "LSP", icon = { icon = icons.lsp, color = "purple" } },
+          { "<leader>s", group = "Search", icon = { icon = icons.search, color = "green" } },
+          { "<leader>u", group = "UI", icon = { icon = icons.ui, color = "cyan" } },
+          { "<leader>q", group = "Session", icon = { icon = icons.session, color = "orange" } },
+          { "<leader>S", group = "Scratch", icon = { icon = icons.scratch, color = "pink" } },
+          { "<leader>t", group = "Terminal", icon = { icon = icons.terminal, color = "green" } },
+          { "<leader>T", group = "Splits", icon = { icon = icons.splits, color = "cyan" } },
+          { "<leader>W", group = "Wiki", icon = { icon = icons.wiki, color = "orange" } },
+          { "d", group = "Delete", icon = { icon = icons.delete, color = "red" } },
+          { "[", group = "Prev", icon = { icon = icons.prev, color = "blue" } },
+          { "]", group = "Next", icon = { icon = icons.next, color = "blue" } },
+          { "g", group = "Goto", icon = { icon = icons.go, color = "yellow" } },
+          { "gx", desc = "Open with system app" }, -- add better description
+          { "z", group = "Fold", icon = { icon = icons.fold, color = "orange" } },
           {
             "<leader>b",
-            group = "buffer",
+            group = "Buffer",
             expand = function()
               return require("which-key.extras").expand.buf()
             end,
           },
           {
             "<leader>w",
-            group = "windows",
+            group = "Windows",
             proxy = "<c-w>",
             expand = function()
               return require("which-key.extras").expand.win()
             end,
           },
-          -- better descriptions
-          { "gx", desc = "Open with system app" },
         },
       },
     },
@@ -361,6 +365,19 @@ return {
         end,
         desc = "Git Stash",
       },
+      {
+        "<leader>gy",
+        function()
+          Snacks.gitbrowse.open({
+            open = function(url)
+              vim.fn.setreg("+", url)
+              Snacks.notify("Copied link to clipboard")
+            end,
+          })
+        end,
+        desc = "Copy Git Link to Clipboard",
+        mode = { "n", "v" },
+      },
       -- LSP "goto" commands (under "g" prefix)
       {
         "gd",
@@ -517,14 +534,14 @@ return {
         desc = "Toggle Zoom",
       },
       {
-        "<leader>.",
+        "<leader>So",
         function()
           Snacks.scratch()
         end,
         desc = "Toggle Scratch Buffer",
       },
       {
-        "<leader>S",
+        "<leader>Ss",
         function()
           Snacks.scratch.select()
         end,

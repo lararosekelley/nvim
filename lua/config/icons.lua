@@ -2,10 +2,40 @@
 --- a nerd font being installed.
 ---
 --- Author: @lararosekelley
---- Last Modified: August 26th, 2025
+--- Last Modified: August 27th, 2025
 
 return {
   icons = {
+    dashboard = {
+      find_file = " ",
+      new_file = " ",
+      find_text = "󰈞 ",
+      recent_files = " ",
+      recent_projects = "󰒋 ",
+      config = " ",
+      restore_session = " ",
+      plugins = " ",
+      quit = "󰩈 ",
+    },
+    whichkey = {
+      ai = " ",
+      delete = " ",
+      diagnostics = "󱖫 ",
+      find = "󰥨 ",
+      fold = " ",
+      go = "󰈇 ",
+      lsp = "󰅩 ",
+      next = " ",
+      prev = " ",
+      scratch = " ",
+      search = " ",
+      session = "󰍩 ",
+      splits = " ",
+      surround = "󰗅 ",
+      terminal = " ",
+      ui = "󰙵 ",
+      wiki = " ",
+    },
     misc = {
       dots = "󱗼 ",
       folder = " ",
@@ -20,10 +50,10 @@ return {
       package_uninstalled = " ",
     },
     dap = {
-      Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
+      Stopped = " ",
       Breakpoint = " ",
       BreakpointCondition = " ",
-      BreakpointRejected = { " ", "DiagnosticError" },
+      BreakpointRejected = " ",
       LogPoint = "󰦪 ",
     },
     diagnostics = {

@@ -24,18 +24,22 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    lazy = false,
-    opts = {
-      auto_install = true,
-      ensure_installed = "all",
-      highlight = { enable = true },
-      indent = { enable = true },
-      textobjects = textobjects,
-    },
+    config = function()
+      local configs = require("nvim-treesitter.configs")
+
+      configs.setup({
+        auto_install = true,
+        ensure_installed = "all",
+        ignore_install = { "ipkg" }, -- error on install as of 2025-08-27
+        highlight = { enable = true },
+        indent = { enable = true },
+        textobjects = textobjects,
+      })
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
+    event = "BufReadPost",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
