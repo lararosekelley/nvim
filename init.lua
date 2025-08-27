@@ -1,30 +1,28 @@
-require("user.commands")
-require("user.keymaps")
-require("user.options")
-require("user.lazy")
-require("user.providers")
+--- Lara's Neovim configuration
+---
+--- Author: @lararosekelley
+--- Last Modified: August 27th, 2025
 
--- plugin config
-require("user.plugins.aider")
-require("user.plugins.alpha")
-require("user.plugins.autopairs")
-require("user.plugins.bufferline")
-require("user.plugins.cmp")
-require("user.plugins.copilot")
-require("user.plugins.dap")
-require("user.plugins.dbee")
-require("user.plugins.gitsigns")
-require("user.plugins.illuminate")
-require("user.plugins.impatient")
-require("user.plugins.lsp")
-require("user.plugins.lualine")
-require("user.plugins.markdown")
-require("user.plugins.project")
-require("user.plugins.refactoring")
-require("user.plugins.telescope")
-require("user.plugins.terminal")
-require("user.plugins.tmux")
-require("user.plugins.tree")
-require("user.plugins.trouble")
-require("user.plugins.treesitter")
-require("user.plugins.wiki")
+-- ensure vim version is at least 0.9.0
+if vim.fn.has("nvim-0.9.0") == 0 then
+  vim.api.nvim_echo({
+    { "This Neovim configuration requires a version >= 0.9.0\n", "ErrorMsg" },
+    { "Press any key to exit...", "MoreMsg" },
+  }, true, {})
+
+  vim.fn.getchar()
+  vim.cmd([[quit]])
+
+  return {}
+end
+
+-- enable experimental lua module loader
+vim.loader.enable()
+
+-- settings
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+
+-- plugin manager (will automatically load plugins from `lua/plugins/*.lua`)
+require("config.lazy")

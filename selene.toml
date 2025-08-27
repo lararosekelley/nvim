@@ -1,0 +1,7 @@
+std = "vim"
+
+[config]
+empty_if = { comments_count = true }
+
+[lints]
+mixed_table="allow"
