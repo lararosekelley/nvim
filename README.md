@@ -24,11 +24,15 @@ git clone git@github.com:lararosekelley/nvim ~/.config/nvim
 ### Fonts
 
 Install a font with support for icons on your system. I recommend using the `getnf`
-utility to install a Nerd font. You can view the [getnf docs here](https://github.com/ronniedroid/getnf).
+utility to install a Nerd Font.
+
+You can view the [getnf docs here](https://github.com/ronniedroid/getnf).
+
+After installing a Nerd Font, set your terminal emulator to use it.
 
 ## System requirements
 
-- [Neovim 0.8+](https://neovim.io)
+- [Neovim 0.9+](https://neovim.io)
 
 ### Languages
 
@@ -81,6 +85,24 @@ See [lua/user/plugins/lsp/init.lua](./lua/user/plugins/lsp/init.lua) for configu
 - `wget`
 
 When Neovim is next opened, plugins will be installed and configured automatically.
+
+### Optional tools
+
+For use of the [`cmp_kitty`](https://github.com/garyhurtz/cmp_kitty) completion source for `nvim-cmp`, you need to use the
+Kitty terminal with one of the following lines in your `kitty.conf`:
+
+```conf
+allow_remote_control socket-only
+allow_remote_control socket
+allow_remote_control yes
+```
+
+Afterwards, set the socket Kitty will listen to by following the instructions
+[here](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.listen_on). Example:
+
+```conf
+listen_on unix:@kitty
+```
 
 ## Project structure
 
