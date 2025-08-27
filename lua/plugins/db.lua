@@ -4,6 +4,7 @@
 --- Last Modified: August 23rd, 2025
 
 return {
+  -- database connection management. works best with treesitter configured for sql
   {
     "kndndrj/nvim-dbee",
     event = "VeryLazy",
@@ -17,10 +18,23 @@ return {
       require("dbee").install()
     end,
     config = function()
+      local dbee = require("dbee")
       local dbee_sources = require("dbee.sources")
 
-      require("dbee").setup({
-        sources = dbee_sources.EnvSource:new("DBEE_CONNECTIONS"),
+      -- default: https://github.com/kndndrj/nvim-dbee/blob/master/lua/dbee/config.lua
+      dbee.setup({
+        sources = {
+          dbee_sources.EnvSource:new("DBEE_CONNECTIONS"),
+        },
+        editor = {
+          mappings = {
+            {
+              key = "<CR>",
+              mode = "n",
+              action = "run_file",
+            },
+          },
+        },
       })
     end,
   },

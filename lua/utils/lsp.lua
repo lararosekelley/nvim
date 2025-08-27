@@ -34,9 +34,12 @@ M.lsp_servers = {
   "yamlls",
 }
 
+---@type integer
 M.lsp_augroup = vim.api.nvim_create_augroup("LspFormatOnSave", {})
 
--- only format with none-ls
+--- Only format with none-ls
+---
+--- @return nil
 M.lsp_format = function()
   vim.lsp.buf.format({
     filter = function(client)

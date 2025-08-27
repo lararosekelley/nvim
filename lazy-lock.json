@@ -11,7 +11,7 @@
   "cmp_kitty": { "branch": "main", "commit": "f0d7782a525b0445499d3217f820ea43f7459e15" },
   "copilot-cmp": { "branch": "master", "commit": "15fc12af3d0109fa76b60b5cffa1373697e261d1" },
   "copilot-lualine": { "branch": "main", "commit": "6bc29ba1fcf8f0f9ba1f0eacec2f178d9be49333" },
-  "copilot.lua": { "branch": "master", "commit": "014f2fbacf42bd6d3225ba5cd1ab8ac10e0c1f76" },
+  "copilot.lua": { "branch": "master", "commit": "6af069979fa9be09d46bc29c397b99d29cc5c4bb" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "fzf-lua": { "branch": "main", "commit": "2c4c75e71eedbedd55ea13ab3400f72a2336e672" },
