@@ -2,7 +2,7 @@
 --- a nerd font being installed.
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: August 28th, 2025
 
 return {
   icons = {
@@ -50,10 +50,10 @@ return {
       package_uninstalled = " ",
     },
     dap = {
-      Stopped = " ",
+      Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
       Breakpoint = " ",
       BreakpointCondition = " ",
-      BreakpointRejected = " ",
+      BreakpointRejected = { " ", "DiagnosticError" },
       LogPoint = "󰦪 ",
     },
     diagnostics = {
