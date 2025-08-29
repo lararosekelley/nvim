@@ -2,7 +2,7 @@
 --- a nerd font being installed.
 ---
 --- Author: @lararosekelley
---- Last Modified: August 28th, 2025
+--- Last Modified: August 29th, 2025
 
 return {
   icons = {
@@ -18,7 +18,7 @@ return {
       quit = "󰩈 ",
     },
     whichkey = {
-      ai = " ",
+      ai = "󱙺 ",
       delete = " ",
       diagnostics = "󱖫 ",
       find = "󰥨 ",
