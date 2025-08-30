@@ -121,6 +121,8 @@ return {
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
       end
+
+      vim.lsp.enable("null-ls")
     end,
   },
 }
