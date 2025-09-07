@@ -71,6 +71,7 @@ return {
           { name = "cmp-dbee" },
           { name = "kitty" },
           { name = "buffer" },
+          { name = "lazydev", group_index = 0 }, -- skip loading LuaLS completions
         },
         completion = {
           auto_brackets = true,

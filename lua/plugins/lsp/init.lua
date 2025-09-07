@@ -1,7 +1,7 @@
 --- LSP configuration
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: September 1st, 2025
 
 local icons = require("config.icons").icons
 local lsp_format = require("utils.lsp").lsp_format
@@ -124,5 +124,16 @@ return {
 
       vim.lsp.enable("null-ls")
     end,
+  },
+  -- better lua lsp performance
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
   },
 }
