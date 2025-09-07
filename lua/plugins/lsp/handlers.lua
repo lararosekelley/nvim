@@ -1,3 +1,8 @@
+--- Utility functions and handlers for LSP servers
+---
+--- Author: @lararosekelley
+--- Last Modified: September 7th, 2025
+
 local icons = require("config.icons").icons
 
 local M = {}
@@ -12,36 +17,37 @@ M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
-  local signs = {
-    { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-    { name = "DiagnosticSignWarn", text = icons.diagnostics.Warn },
-    { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-    { name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
-  }
-
-  for _, sign in ipairs(signs) do
-    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-  end
-
-  local config = {
+  vim.diagnostic.config({
     virtual_text = false, -- show in-line diagnostics
     signs = {
-      active = signs,
+      -- per-severity icons in the sign column
+      text = {
+        [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+        [vim.diagnostic.severity.WARN]  = icons.diagnostics.Warn,
+        [vim.diagnostic.severity.HINT]  = icons.diagnostics.Hint,
+        [vim.diagnostic.severity.INFO]  = icons.diagnostics.Info,
+      },
+      -- OPTIONAL: keep number-column highlights similar to old texthl groups
+      numhl = {
+        [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+        [vim.diagnostic.severity.WARN]  = "DiagnosticSignWarn",
+        [vim.diagnostic.severity.HINT]  = "DiagnosticSignHint",
+        [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
+      },
+      -- You can also add linehl = { [sev] = "YourLineHLGroup", ... } if you want.
     },
     update_in_insert = true,
     underline = true,
     severity_sort = true,
     float = {
-      focusable = false, -- change to true to disable automatic popup
+      focusable = false, -- set true to disable auto-close
       style = "minimal",
       border = "rounded",
       source = "always",
       header = "",
       prefix = "",
     },
-  }
-
-  vim.diagnostic.config(config)
+  })
 
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
@@ -52,7 +58,7 @@ M.setup = function()
   })
 end
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(client, _)
   local disable_formatting_clients = { ts_ls = true, lua_ls = true }
 
   if disable_formatting_clients[client.name] then
