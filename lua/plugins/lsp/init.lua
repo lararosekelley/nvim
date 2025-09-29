@@ -31,7 +31,8 @@ return {
       handlers.setup()
 
       nls.setup({
-        debug = true,
+        -- flip to true to debug
+        debug = false,
         sources = {
           -- code actions
           eslint_code_actions.with({
@@ -121,8 +122,6 @@ return {
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
       end
-
-      vim.lsp.enable("null-ls")
     end,
   },
   -- better lua lsp performance

@@ -20,6 +20,7 @@ end
 vim.loader.enable()
 
 -- settings
+require("config.providers")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")

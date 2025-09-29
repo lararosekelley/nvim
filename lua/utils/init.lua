@@ -8,6 +8,18 @@ local M = {}
 ---@type table<(fun()), table<string, any>>
 M.cache = {}
 
+function M.remove_at(t, index)
+  local new = {}
+
+  for i = 1, #t do
+    if i ~= index then
+      table.insert(new, t[i])
+    end
+  end
+
+  return new
+end
+
 --- Navigate between terminal and normal windows
 ---
 --- @param dir string

@@ -15,6 +15,7 @@ return {
       config = " ",
       restore_session = " ",
       plugins = " ",
+      health = " ",
       quit = "󰩈 ",
     },
     whichkey = {

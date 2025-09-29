@@ -70,6 +70,12 @@ return {
               action = ":Lazy",
             },
             {
+              icon = icons.dashboard.health,
+              key = "h",
+              desc = "Health",
+              action = ":checkhealth",
+            },
+            {
               icon = icons.dashboard.quit,
               key = "q",
               desc = "Quit",

@@ -32,7 +32,7 @@ return {
       { "]B", "<Cmd>BufferLineMoveNext<CR>", desc = "Move buffer next" },
     },
     opts = {
-      highlights = require("catppuccin.groups.integrations.bufferline").get_theme(),
+      highlights = require("catppuccin.special.bufferline").get_theme(),
       options = {
         separator_style = "slant",
         hover = {

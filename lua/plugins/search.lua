@@ -8,7 +8,17 @@ return {
   {
     "ibhagwan/fzf-lua",
     event = "VeryLazy",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      {
+        "JasinskiRafal/viu.nvim",
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "m00qek/baleia.nvim",
+        },
+        opts = {},
+      },
+    },
     opts = {},
   },
   -- better f and t motions

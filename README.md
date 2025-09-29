@@ -83,6 +83,14 @@ See [lua/user/plugins/lsp/init.lua](./lua/user/plugins/lsp/init.lua) for configu
 - [tmux](https://github.com/tmux/tmux)
 - [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 - `wget`
+- [latex2text](https://pypi.org/project/pylatexenc)
+- [mmdc](https://github.com/mermaid-js/mermaid-cli) (for Mermaid diagrams)
+
+For terminal image previews:
+
+- `chafa`
+- [ueberzugpp](https://github.com/jstkdng/ueberzugpp)
+- [viu](https://github.com/atanunq/viu)
 
 When Neovim is next opened, plugins will be installed and configured automatically.
 
