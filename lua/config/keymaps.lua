@@ -81,6 +81,12 @@ map("n", "<leader>,", "za", { desc = "Toggle fold" })
 -- find and replace under cursor
 map("n", "<leader>S", ":%s/\\<<C-r><C-w>\\>/", { desc = "Find and replace under cursor" })
 
+-- term mode
+------------
+
+-- tmux support
+map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
 -- visual mode
 --------------
 

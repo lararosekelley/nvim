@@ -1,0 +1,3 @@
+#!/bin/sh
+
+LUAROCKS_SYSCONFDIR='/etc/luarocks' exec '/usr/bin/lua' -e 'package.path="/usr/share/lua/5.4/?.lua;/usr/share/lua/5.4/?/init.lua;/usr/lib64/lua/5.4/?.lua;/usr/lib64/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/home/lara/.luarocks/share/lua/5.4/?.lua;/home/lara/.luarocks/share/lua/5.4/?/init.lua";package.cpath="/usr/lib64/lua/5.4/?.so;/usr/lib64/lua/5.4/loadall.so;./?.so;/home/lara/.luarocks/lib64/lua/5.4/?.so"' '/usr/bin/luarocks' --project-tree /home/lara/.config/nvim/lua_modules "$@"

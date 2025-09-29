@@ -30,7 +30,6 @@ M.lsp_servers = {
   "terraformls",
   "ts_ls",
   "vimls",
-  "vuels",
   "yamlls",
 }
 
