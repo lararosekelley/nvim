@@ -476,9 +476,16 @@ return {
       {
         "<leader>sg",
         function()
-          Snacks.picker.grep()
+          Snacks.picker.grep({ hidden = true })
         end,
         desc = "Grep Project",
+      },
+      {
+        "<leader>sG",
+        function()
+          Snacks.picker.grep({ hidden = true, ignored = true, exclude = { ".git", "build", "node_modules", "tmp" } })
+        end,
+        desc = "Grep All Files (including ignored)",
       },
       {
         "<leader>sw",

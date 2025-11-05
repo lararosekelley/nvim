@@ -24,6 +24,7 @@ M.lsp_servers = {
   "solargraph",
   "sqlls",
   "lua_ls",
+  "oxlint",
   "stylelint_lsp",
   "svelte",
   "tailwindcss",
