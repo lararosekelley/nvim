@@ -12,7 +12,7 @@ return {
     build = "make",
     version = false,
     opts = {
-      instructions_file = "ROBOTS.md",
+      instructions_file = "docs/ROBOTS.md",
       provider = "claude",
       auto_suggestions_provider = "claude",
       providers = {
@@ -70,25 +70,6 @@ return {
         },
         ft = { "markdown", "Avante" },
       },
-    },
-  },
-  -- aider
-  {
-    "GeorgesAlkhouri/nvim-aider",
-    enabled = false, -- TODO: enable or remove once avante is settled
-    cmd = "Aider",
-    event = "VeryLazy",
-    dependencies = {
-      "folke/snacks.nvim",
-      "catppuccin/nvim",
-    },
-    opts = {
-      -- ensure environment variables are set for API keys
-      args = {
-        "--no-auto-commits",
-        "--model anthropic/claude-sonnet-4-20250514",
-      },
-      auto_reload = true,
     },
   },
   -- copilot
