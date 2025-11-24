@@ -72,7 +72,7 @@ end, { nowait = true })
 map("n", "<leader>X", ":.+1,$tabdo :q<CR>", { desc = "Close all tabs to the right" })
 
 -- copy and paste
-map("n", "<leader>a", "ggVG", { desc = "Select all" })
+map("n", "<leader>A", "ggVG", { desc = "Select all" })
 map("n", "<leader>y", 'gg"*yG``', { desc = "Copy all contents to clipboard" })
 
 -- toggle fold

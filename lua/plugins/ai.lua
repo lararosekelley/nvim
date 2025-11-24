@@ -1,12 +1,81 @@
 --- Integration of AI tools and plugins for enhanced coding assistance
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: November 17th, 2025
 
 return {
+  -- avante
+  {
+    "yetone/avante.nvim",
+    enabled = false, -- TODO: enable once auto suggestions behavior feels right
+    event = "VeryLazy",
+    build = "make",
+    version = false,
+    opts = {
+      instructions_file = "ROBOTS.md",
+      provider = "claude",
+      auto_suggestions_provider = "claude",
+      providers = {
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-sonnet-4-20250514",
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 20480,
+          },
+        },
+        copilot = {
+          model = "gpt-5",
+        },
+      },
+      behaviour = {
+        auto_suggestions = false, -- enable for automatic code suggestions
+      },
+      windows = {
+        position = "right",
+      },
+      file_selector = {
+        provider = "snacks",
+      },
+      input = {
+        provider = "snacks",
+      },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "zbirenbaum/copilot.lua",
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
   -- aider
   {
     "GeorgesAlkhouri/nvim-aider",
+    enabled = false, -- TODO: enable or remove once avante is settled
     cmd = "Aider",
     event = "VeryLazy",
     dependencies = {
@@ -20,16 +89,6 @@ return {
         "--model anthropic/claude-sonnet-4-20250514",
       },
       auto_reload = true,
-    },
-    keys = {
-      { "<leader>At", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
-      { "<leader>As", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
-      { "<leader>Ac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
-      { "<leader>Ab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
-      { "<leader>A+", "<cmd>Aider add<cr>", desc = "Add File" },
-      { "<leader>A-", "<cmd>Aider drop<cr>", desc = "Drop File" },
-      { "<leader>Ar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
-      { "<leader>AR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
     },
   },
   -- copilot

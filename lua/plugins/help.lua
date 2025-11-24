@@ -18,7 +18,7 @@ return {
       spec = {
         {
           mode = { "n", "v" },
-          { "<leader>A", group = "AI", icon = { icon = icons.ai, color = "pink" } },
+          { "<leader>a", group = "Avante (AI)", icon = { icon = icons.ai, color = "pink" } },
           { "<leader>c", group = "Code Actions" },
           { "<leader>d", group = "Diagnostics / Debug", icon = { icon = icons.diagnostics, color = "green" } },
           { "<leader>f", group = "Find", icon = { icon = icons.find, color = "green" } },
