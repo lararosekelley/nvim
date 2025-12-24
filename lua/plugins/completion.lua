@@ -108,6 +108,7 @@ return {
   },
   {
     "garyhurtz/cmp_kitty",
+    cond = not vim.env.TMUX,
     event = { "InsertEnter", "LspAttach" },
     init = function()
       require("cmp_kitty"):setup()
