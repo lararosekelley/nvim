@@ -1,5 +1,6 @@
 .aider.*
 lua_modules
+.claude/settings.local.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/lua
 # Edit at https://www.toptal.com/developers/gitignore?templates=lua
