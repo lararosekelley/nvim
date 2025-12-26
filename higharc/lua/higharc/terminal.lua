@@ -31,9 +31,15 @@ function M.run(cmd, opts)
     cwd = root,
     interactive = false,
     auto_close = false,
+    focus = true,
   }, config.options.terminal, opts)
 
   snacks.terminal(cmd_str, term_opts)
+
+  -- Enter terminal mode after opening
+  vim.schedule(function()
+    vim.cmd("startinsert")
+  end)
 end
 
 ---Run a raw command in a snacks terminal (for non-higharc commands)
@@ -54,9 +60,15 @@ function M.run_raw(cmd, opts)
     cwd = root,
     interactive = false,
     auto_close = false,
+    focus = true,
   }, config.options.terminal, opts)
 
   snacks.terminal(cmd, term_opts)
+
+  -- Enter terminal mode after opening
+  vim.schedule(function()
+    vim.cmd("startinsert")
+  end)
 end
 
 return M

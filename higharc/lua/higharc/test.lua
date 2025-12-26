@@ -87,16 +87,18 @@ function M.run_current(opts)
     return
   end
 
+  local root = config.get_project_root()
   local test_pattern
 
   if is_test_file(filepath) then
-    -- Current file is a test file, use its name
-    test_pattern = extract_test_name(filepath)
+    -- Current file is a test file, use relative path from repo root
+    test_pattern = filepath:gsub("^" .. vim.pesc(root) .. "/", "")
   else
     -- Try to find corresponding test file
     local test_file = find_test_file(filepath)
     if test_file then
-      test_pattern = extract_test_name(test_file)
+      -- find_test_file already returns relative path
+      test_pattern = test_file
     else
       -- Fall back to source file name
       test_pattern = extract_test_name(filepath)
