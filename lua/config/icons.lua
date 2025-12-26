@@ -35,6 +35,7 @@ return {
       surround = "󰗅 ",
       terminal = " ",
       ui = "󰙵 ",
+      higharc = "󰏗 ",
       wiki = " ",
     },
     misc = {
