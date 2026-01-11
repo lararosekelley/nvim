@@ -60,14 +60,15 @@ For a few languages, additional "provider" packages are required:
 ### Formatting tools
 
 These should all be available on your `$PATH`, though local binaries will be used first if available.
-See [lua/user/plugins/lsp/init.lua](./lua/user/plugins/lsp/init.lua) for configuration options.
+See [lua/plugins/lsp/init.lua](./lua/plugins/lsp/init.lua) for configuration options.
 
 - [black](https://github.com/psf/black)
 - [google-java-format](https://github.com/google/google-java-format)
 - [flake8](https://flake8.pycqa.org/en/latest)
 - [markdownlint](https://github.com/igorshubovych/markdownlint-cli)
-- [stylua](https://github.com/JohnnyMorganz/StyLua)
 - [prettierd](https://github.com/fsouza/prettierd)
+- [sqlfluff](https://github.com/sqlfluff/sqlfluff)
+- [stylua](https://github.com/JohnnyMorganz/StyLua)
 
 ### Other tools
 
@@ -80,6 +81,8 @@ See [lua/user/plugins/lsp/init.lua](./lua/user/plugins/lsp/init.lua) for configu
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - `sh`
 - `tar`
+- [lazygit](https://github.com/jesseduffield/lazygit)
+- [make](https://www.gnu.org/software/make)
 - [tmux](https://github.com/tmux/tmux)
 - [tree-sitter](https://github.com/tree-sitter/tree-sitter)
 - `wget`
@@ -114,12 +117,12 @@ listen_on unix:@kitty
 
 ## Project structure
 
-Configuration begins in the [init.lua](./init.lua) file, with most files living under The
-[lua/user/](./lua/user) directory, broken up by purpose and plugin.
+Configuration begins in the [init.lua](./init.lua) file, with most files living under the
+[lua/](./lua) directory, broken up by purpose and plugin.
 
 ## Plugins
 
-See full plugin configuration [here](./lua/user/plugins.lua).
+See full plugin configuration [here](./lua/plugins).
 
 ## Acknowledgements
 
