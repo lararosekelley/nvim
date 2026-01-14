@@ -42,7 +42,7 @@ return {
           flake8_diagnostics.with({
             prefer_local = ".venv/bin",
           }),
-          diagnostics.markdownlint.with({
+          diagnostics.markdownlint_cli2.with({
             extra_filetypes = { "vimwiki" },
           }),
           diagnostics.sqlfluff.with({
@@ -54,12 +54,8 @@ return {
             prefer_local = ".venv/bin",
           }),
           formatting.google_java_format,
-          formatting.markdownlint.with({
-            extra_filetypes = { "vimwiki" },
-          }),
           formatting.prettierd.with({
-            extra_filetypes = { "toml" }, -- vimwiki markdown syntax
-            ignore_filetypes = { "markdown" },
+            extra_filetypes = { "toml", "vimwiki" },
           }),
           formatting.stylua,
         },
@@ -76,6 +72,23 @@ return {
         end,
       })
     end,
+  },
+  -- non-LSP tool installer
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    event = "VeryLazy",
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {
+      ensure_installed = {
+        "black",
+        "flake8",
+        "google-java-format",
+        "markdownlint-cli2",
+        "prettierd",
+        "sqlfluff",
+        "stylua",
+      },
+    },
   },
   -- language server installer
   {
