@@ -163,7 +163,7 @@ return {
       {
         "<leader>ff",
         function()
-          Snacks.picker.files()
+          Snacks.picker.files({ hidden = true, exclude = { ".home" } })
         end,
         desc = "Files",
       },
@@ -261,7 +261,7 @@ return {
       {
         "<leader>fr",
         function()
-          Snacks.picker.recent()
+          Snacks.picker.recent({ hidden = true, exclude = { ".home" } })
         end,
         desc = "Recent Files",
       },
@@ -282,7 +282,7 @@ return {
       {
         "<leader>fS",
         function()
-          Snacks.picker.smart()
+          Snacks.picker.smart({ hidden = true, exclude = { ".home" } })
         end,
         desc = "Smart Find Files",
       },
@@ -469,7 +469,7 @@ return {
       {
         "<leader>sB",
         function()
-          Snacks.picker.grep_buffers()
+          Snacks.picker.grep_buffers({ hidden = true })
         end,
         desc = "Grep Open Buffers",
       },
@@ -490,7 +490,7 @@ return {
       {
         "<leader>sw",
         function()
-          Snacks.picker.grep_word()
+          Snacks.picker.grep_word({ hidden = true })
         end,
         desc = "Grep Selection or Word",
         mode = { "n", "x" },
