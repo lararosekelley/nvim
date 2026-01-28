@@ -85,6 +85,7 @@ return {
         "google-java-format",
         "markdownlint-cli2",
         "prettierd",
+        "rust-analyzer",
         "sqlfluff",
         "stylua",
       },
