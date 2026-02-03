@@ -98,9 +98,9 @@ return {
       panel = {
         enabled = false,
       },
+      -- filetypes to enable or disable in
       filetypes = {
-        markdown = true,
-        help = true,
+        markdown = false,
       },
     },
   },
