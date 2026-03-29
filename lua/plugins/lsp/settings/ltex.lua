@@ -27,7 +27,7 @@ return {
         ["en-US"] = { "Higharc" },
       },
       disabledRules = {
-        ["en-US"] = {},
+        ["en-US"] = { "Neovim" },
       },
     },
   },
