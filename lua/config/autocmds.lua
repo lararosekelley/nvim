@@ -29,6 +29,12 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function()
     vim.opt_local.spell = true
     vim.opt_local.spelllang = { "en_us" }
+
+    if vim.bo.filetype == "markdown" then
+      vim.cmd([[syntax match markdownNoSpellInline /`[^`]\+/ contains=@NoSpell]])
+      vim.cmd([[syntax region markdownNoSpellFence start=/^\s*```/ end=/^\s*```/ keepend contains=@NoSpell]])
+      vim.cmd([[syntax region markdownNoSpellFenceTilde start=/^\s*~~~/ end=/^\s*~~~/ keepend contains=@NoSpell]])
+    end
   end,
 })
 
