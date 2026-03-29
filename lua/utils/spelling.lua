@@ -45,12 +45,12 @@ function M.add_word_to_ltex_dictionary()
   local content = read_ltex_settings()
 
   if content == "" then
-    vim.notify("Unable to read LTEX settings file", vim.log.levels.ERROR)
+    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
     return
   end
 
   if content:find('"' .. word .. '"', 1, true) then
-    vim.notify("Word already exists in LTEX dictionary: " .. word, vim.log.levels.INFO)
+    vim.notify("Word already exists in dictionary: " .. word, vim.log.levels.INFO)
     return
   end
 
@@ -61,11 +61,11 @@ function M.add_word_to_ltex_dictionary()
       local trimmed = body:gsub("^%s+", ""):gsub("%s+$", "")
 
       if trimmed == "" then
-        return prefix .. " \"" .. word .. "\" " .. suffix
+        return prefix .. ' "' .. word .. '" ' .. suffix
       end
 
       if body:find("\n") then
-        return prefix .. body:gsub("%s*$", "") .. "\n        \"" .. word .. "\"," .. suffix
+        return prefix .. body:gsub("%s*$", "") .. '\n        "' .. word .. '",' .. suffix
       end
 
       return prefix .. body:gsub("%s*$", "") .. ', "' .. word .. '"' .. suffix
@@ -73,14 +73,14 @@ function M.add_word_to_ltex_dictionary()
   end
 
   if count == 0 then
-    vim.notify("Could not locate LTEX en-US dictionary block", vim.log.levels.ERROR)
+    vim.notify("Could not locate en-US dictionary block", vim.log.levels.ERROR)
     return
   end
 
   vim.fn.writefile(vim.split(updated, "\n", { plain = true }), settings_path)
   pcall(vim.cmd, "silent keepjumps normal! zg")
   update_ltex_clients(word, true)
-  vim.notify("Added to LTEX dictionary: " .. word, vim.log.levels.INFO)
+  vim.notify("Added to dictionary: " .. word, vim.log.levels.INFO)
 end
 
 function M.remove_word_from_ltex_dictionary()
@@ -95,7 +95,7 @@ function M.remove_word_from_ltex_dictionary()
   local content = read_ltex_settings()
 
   if content == "" then
-    vim.notify("Unable to read LTEX settings file", vim.log.levels.ERROR)
+    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
     return
   end
 
@@ -129,7 +129,7 @@ function M.remove_word_from_ltex_dictionary()
       local rebuilt = "\n"
 
       for _, entry in ipairs(filtered) do
-        rebuilt = rebuilt .. "        \"" .. entry .. "\",\n"
+        rebuilt = rebuilt .. '        "' .. entry .. '",\n'
       end
 
       rebuilt = rebuilt .. "      "
@@ -149,19 +149,38 @@ function M.remove_word_from_ltex_dictionary()
   end, 1)
 
   if count == 0 then
-    vim.notify("Could not locate LTEX en-US dictionary block", vim.log.levels.ERROR)
+    vim.notify("Could not locate en-US dictionary block", vim.log.levels.ERROR)
     return
   end
 
   if updated == content then
-    vim.notify("Word not found in LTEX dictionary: " .. word, vim.log.levels.INFO)
+    vim.notify("Word not found in dictionary: " .. word, vim.log.levels.INFO)
   else
     vim.fn.writefile(vim.split(updated, "\n", { plain = true }), settings_path)
   end
 
   pcall(vim.cmd, "silent! keepjumps normal! zug")
   update_ltex_clients(word, false)
-  vim.notify("Removed from LTEX dictionary: " .. word, vim.log.levels.INFO)
+  vim.notify("Removed from dictionary: " .. word, vim.log.levels.INFO)
+end
+
+function M.regenerate_custom_spellfile()
+  local config_dir = vim.fn.stdpath("config")
+  local source = config_dir .. "/spell/en.utf-8.add"
+  local target = config_dir .. "/spell/en.utf-8.add.spl"
+
+  if vim.fn.filereadable(source) ~= 1 then
+    vim.notify("Missing source spellfile: " .. source, vim.log.levels.ERROR)
+    return
+  end
+
+  local ok, err = pcall(vim.cmd, "silent mkspell! " .. vim.fn.fnameescape(target) .. " " .. vim.fn.fnameescape(source))
+  if not ok then
+    vim.notify("Failed to regenerate spellfile: " .. err, vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify("Regenerated spellfile: " .. target, vim.log.levels.INFO)
 end
 
 return M
