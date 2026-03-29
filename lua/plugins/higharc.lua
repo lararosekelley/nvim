@@ -5,11 +5,13 @@
 local icons = require("config.icons").icons.whichkey
 
 return {
-  -- Local higharc plugin
   {
-    dir = vim.fn.stdpath("config") .. "/higharc",
-    name = "higharc.nvim",
+    "git@github.com:higharc/higharc.nvim",
     event = "VeryLazy",
+    dependencies = {
+      "folke/snacks.nvim",
+      "hrsh7th/nvim-cmp",
+    },
     config = function()
       require("higharc").setup({
         terminal = {
