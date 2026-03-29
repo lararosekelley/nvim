@@ -24,10 +24,7 @@ return {
         enablePickyRules = false,
       },
       dictionary = {
-        ["en-US"] = { "Higharc", "LLM", "LLMs", "CTO" },
-      },
-      disabledRules = {
-        ["en-US"] = { "Neovim" },
+        ["en-US"] = { "Higharc", "LLM", "LLMs", "CTO", "OpenCode", "Neovim" },
       },
     },
   },

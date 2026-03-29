@@ -84,6 +84,9 @@ map("n", "<leader>us", function()
   vim.opt_local.spell = not vim.opt_local.spell:get()
 end, { desc = "Toggle spellcheck" })
 
+-- regenerate en.utf-8.add.spl from en.utf-8.add
+map("n", "<leader>ug", spelling.regenerate_custom_spellfile, { desc = "Regenerate custom spellfile" })
+
 -- add word under cursor to LTEX dictionary
 map("n", "<leader>ua", spelling.add_word_to_ltex_dictionary, { desc = "Add word to LTEX dictionary" })
 
