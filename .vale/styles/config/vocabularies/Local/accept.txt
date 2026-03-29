@@ -1,0 +1,2 @@
+# Add one accepted term per line, for example:
+# Neovim

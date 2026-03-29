@@ -23,12 +23,12 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 -- close location list if parent window closes
 vim.cmd("autocmd QuitPre * silent! lclose")
 
--- spellcheck
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "markdown", "plaintext" },
+-- spellcheck for prose-heavy buffers
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "markdown", "text", "plaintext", "gitcommit" },
   callback = function()
     vim.opt_local.spell = true
-    vim.opt_local.spelllang = "en_us"
+    vim.opt_local.spelllang = { "en_us" }
   end,
 })
 

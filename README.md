@@ -67,6 +67,7 @@ for configuration options.
 - [google-java-format](https://github.com/google/google-java-format)
 - [flake8](https://flake8.pycqa.org/en/latest)
 - [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2)
+- [vale](https://vale.sh)
 - [prettierd](https://github.com/fsouza/prettierd)
 - [sqlfluff](https://github.com/sqlfluff/sqlfluff)
 - [stylua](https://github.com/JohnnyMorganz/StyLua)

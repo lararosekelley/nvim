@@ -1,0 +1,20 @@
+extends: existence
+message: "Avoid weak qualifier '%s'."
+level: suggestion
+ignorecase: true
+tokens:
+  - a bit
+  - actually
+  - basically
+  - clearly
+  - fairly
+  - hopefully
+  - just
+  - kind of
+  - maybe
+  - quite
+  - rather
+  - really
+  - simply
+  - somewhat
+  - very
