@@ -1,0 +1,8 @@
+extends: substitution
+message: "Prefer '%s' over '%s'."
+level: suggestion
+ignorecase: true
+swap:
+  abort: stop
+  execute: run
+  in order to: to

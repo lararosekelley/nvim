@@ -1,0 +1,7 @@
+extends: existence
+message: "Avoid repeated punctuation '%s'."
+level: warning
+nonword: true
+tokens:
+  - "\\?\\?"
+  - "!!"

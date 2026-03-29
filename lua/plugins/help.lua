@@ -25,7 +25,7 @@ return {
           { "<leader>g", group = "Git" },
           { "<leader>l", group = "LSP", icon = { icon = icons.lsp, color = "purple" } },
           { "<leader>s", group = "Search", icon = { icon = icons.search, color = "green" } },
-          { "<leader>u", group = "UI", icon = { icon = icons.ui, color = "cyan" } },
+          { "<leader>u", group = "Spelling & Grammar", icon = { icon = icons.ui, color = "cyan" } },
           { "<leader>q", group = "Session", icon = { icon = icons.session, color = "orange" } },
           { "<leader>S", group = "Scratch", icon = { icon = icons.scratch, color = "pink" } },
           { "<leader>t", group = "Terminal", icon = { icon = icons.terminal, color = "green" } },

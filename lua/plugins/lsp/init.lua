@@ -24,41 +24,69 @@ return {
       local handlers = require("plugins.lsp.handlers")
       local eslint_code_actions = require("none-ls.code_actions.eslint")
       local flake8_diagnostics = require("none-ls.diagnostics.flake8")
+      local has_extra_vale, vale_diagnostics = pcall(require, "none-ls.diagnostics.vale")
 
       local formatting = nls.builtins.formatting
       local diagnostics = nls.builtins.diagnostics
+      local vale = nil
+
+      if has_extra_vale then
+        vale = vale_diagnostics
+      elseif diagnostics.vale then
+        vale = diagnostics.vale
+      end
+
+      local sources = {
+        -- code actions
+        eslint_code_actions.with({
+          prefer_local = "node_modules/.bin",
+        }),
+        -- diagnostics
+        flake8_diagnostics.with({
+          prefer_local = ".venv/bin",
+        }),
+        diagnostics.markdownlint_cli2.with({
+          extra_filetypes = { "vimwiki" },
+        }),
+        diagnostics.sqlfluff.with({
+          extra_args = { "--dialect", "postgres" }, -- prefer postgresql
+        }),
+        -- formatting
+        formatting.black.with({
+          extra_args = { "--fast" },
+          prefer_local = ".venv/bin",
+        }),
+        formatting.google_java_format,
+        formatting.prettierd.with({
+          extra_filetypes = { "toml", "vimwiki" },
+        }),
+        formatting.stylua,
+      }
+
+      if vale then
+        table.insert(sources, vale.with({
+          filetypes = { "markdown", "text", "gitcommit", "rst", "asciidoc" },
+          extra_args = function(params)
+            local root = params.root or ((vim.uv or vim.loop).cwd()) or vim.fn.getcwd()
+            local local_config = nil
+
+            if vim.fn.filereadable(root .. "/.vale.ini") == 1 then
+              local_config = root .. "/.vale.ini"
+            elseif vim.fn.filereadable(root .. "/_vale.ini") == 1 then
+              local_config = root .. "/_vale.ini"
+            end
+
+            return { "--config", local_config or (vim.fn.stdpath("config") .. "/.vale.ini") }
+          end,
+        }))
+      end
 
       handlers.setup()
 
       nls.setup({
         -- flip to true to debug
         debug = false,
-        sources = {
-          -- code actions
-          eslint_code_actions.with({
-            prefer_local = "node_modules/.bin",
-          }),
-          -- diagnostics
-          flake8_diagnostics.with({
-            prefer_local = ".venv/bin",
-          }),
-          diagnostics.markdownlint_cli2.with({
-            extra_filetypes = { "vimwiki" },
-          }),
-          diagnostics.sqlfluff.with({
-            extra_args = { "--dialect", "postgres" }, -- prefer postgresql
-          }),
-          -- formatting
-          formatting.black.with({
-            extra_args = { "--fast" },
-            prefer_local = ".venv/bin",
-          }),
-          formatting.google_java_format,
-          formatting.prettierd.with({
-            extra_filetypes = { "toml", "vimwiki" },
-          }),
-          formatting.stylua,
-        },
+        sources = sources,
         on_attach = function(client, bufnr)
           -- https://github.com/nvimtools/none-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
           if client.supports_method("textDocument/formatting") then
@@ -84,6 +112,7 @@ return {
         "flake8",
         "google-java-format",
         "markdownlint-cli2",
+        "vale",
         "prettierd",
         "rust-analyzer",
         "sqlfluff",

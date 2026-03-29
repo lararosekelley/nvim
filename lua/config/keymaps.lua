@@ -4,6 +4,7 @@
 --- Last Modified: August 27th, 2025
 
 local map = require("utils").map
+local spelling = require("utils.spelling")
 
 -- leader key
 map("", ",", "<Nop>")
@@ -77,6 +78,17 @@ map("n", "<leader>y", 'gg"*yG``', { desc = "Copy all contents to clipboard" })
 
 -- toggle fold
 map("n", "<leader>,", "za", { desc = "Toggle fold" })
+
+-- toggle spellcheck in current buffer
+map("n", "<leader>us", function()
+  vim.opt_local.spell = not vim.opt_local.spell:get()
+end, { desc = "Toggle spellcheck" })
+
+-- add word under cursor to LTEX dictionary
+map("n", "<leader>ua", spelling.add_word_to_ltex_dictionary, { desc = "Add word to LTEX dictionary" })
+
+-- remove word under cursor from LTEX dictionary
+map("n", "<leader>ur", spelling.remove_word_from_ltex_dictionary, { desc = "Remove word from LTEX dictionary" })
 
 -- find and replace under cursor
 map("n", "<leader>S", ":%s/\\<<C-r><C-w>\\>/", { desc = "Find and replace under cursor" })
