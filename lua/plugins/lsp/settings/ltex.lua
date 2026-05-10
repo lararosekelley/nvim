@@ -24,7 +24,7 @@ return {
         enablePickyRules = false,
       },
       dictionary = {
-        ["en-US"] = { "Higharc", "LLM", "LLMs", "CTO", "OpenCode", "Neovim" },
+        ["en-US"] = { "Higharc", "LLM", "LLMs", "CTO", "OpenCode", "Neovim", "timestamp", "Vercel", "AWS", "KDE", "macOS", "CLI", "monorepo", "MacBook", "PowerShell", "VM", "changelog", "intentioned", "rebase", "DevOps", "namespace", "TypeScript", "searchable", "Searchability", "discoverability", "metadata", "pre", "JSON", "basmati", "Cognito", "UI", "UX", "MCP", "MCPs", "UIs", "PRs", "DataDog", "Figma", "Mockups", "Replit", "v0", "mockups", "mockup", "Labneh", "labneh", "Teta" },
       },
     },
   },
