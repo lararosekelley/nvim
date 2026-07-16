@@ -1,7 +1,7 @@
 local M = {}
 
 local function ltex_settings_path()
-  return vim.fn.stdpath("config") .. "/lua/plugins/lsp/settings/ltex.lua"
+  return vim.fn.stdpath("config") .. "/lua/plugins/lsp/settings/ltex_plus.lua"
 end
 
 local function read_ltex_settings()
@@ -9,7 +9,7 @@ local function read_ltex_settings()
 end
 
 local function update_ltex_clients(word, add)
-  for _, client in ipairs(vim.lsp.get_clients({ name = "ltex" })) do
+  for _, client in ipairs(vim.lsp.get_clients({ name = "ltex_plus" })) do
     client.config.settings = client.config.settings or {}
     client.config.settings.ltex = client.config.settings.ltex or {}
     client.config.settings.ltex.dictionary = client.config.settings.ltex.dictionary or {}

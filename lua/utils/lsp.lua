@@ -17,7 +17,7 @@ M.lsp_servers = {
   "html",
   "jdtls",
   "jsonls",
-  "ltex",
+  "ltex_plus",
   "perlnavigator",
   "prismals",
   "pyright",
