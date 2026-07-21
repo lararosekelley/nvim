@@ -64,21 +64,24 @@ return {
       }
 
       if vale then
-        table.insert(sources, vale.with({
-          filetypes = { "markdown", "text", "gitcommit", "rst", "asciidoc" },
-          extra_args = function(params)
-            local root = params.root or ((vim.uv or vim.loop).cwd()) or vim.fn.getcwd()
-            local local_config = nil
+        table.insert(
+          sources,
+          vale.with({
+            filetypes = { "markdown", "text", "gitcommit", "rst", "asciidoc" },
+            extra_args = function(params)
+              local root = params.root or ((vim.uv or vim.loop).cwd()) or vim.fn.getcwd()
+              local local_config = nil
 
-            if vim.fn.filereadable(root .. "/.vale.ini") == 1 then
-              local_config = root .. "/.vale.ini"
-            elseif vim.fn.filereadable(root .. "/_vale.ini") == 1 then
-              local_config = root .. "/_vale.ini"
-            end
+              if vim.fn.filereadable(root .. "/.vale.ini") == 1 then
+                local_config = root .. "/.vale.ini"
+              elseif vim.fn.filereadable(root .. "/_vale.ini") == 1 then
+                local_config = root .. "/_vale.ini"
+              end
 
-            return { "--config", local_config or (vim.fn.stdpath("config") .. "/.vale.ini") }
-          end,
-        }))
+              return { "--config", local_config or (vim.fn.stdpath("config") .. "/.vale.ini") }
+            end,
+          })
+        )
       end
 
       handlers.setup()

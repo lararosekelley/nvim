@@ -29,17 +29,17 @@ return {
         "conf",
       },
       user_default_options = {
-        RGB = true,         -- #RGB hex codes
-        RRGGBB = true,      -- #RRGGBB hex codes
-        names = false,      -- "Name" codes like Blue (can be slow)
-        RRGGBBAA = true,    -- #RRGGBBAA hex codes
-        AARRGGBB = true,    -- 0xAARRGGBB hex codes
-        rgb_fn = true,      -- CSS rgb() and rgba() functions
-        hsl_fn = true,      -- CSS hsl() and hsla() functions
-        css = true,         -- Enable all CSS features
-        css_fn = true,      -- Enable all CSS *functions*
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        names = false, -- "Name" codes like Blue (can be slow)
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        AARRGGBB = true, -- 0xAARRGGBB hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features
+        css_fn = true, -- Enable all CSS *functions*
         mode = "background", -- "foreground", "background", or "virtualtext"
-        tailwind = true,    -- Enable tailwind colors
+        tailwind = true, -- Enable tailwind colors
         virtualtext = "",
       },
     },

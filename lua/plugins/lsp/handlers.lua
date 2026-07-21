@@ -23,16 +23,16 @@ M.setup = function()
       -- per-severity icons in the sign column
       text = {
         [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
-        [vim.diagnostic.severity.WARN]  = icons.diagnostics.Warn,
-        [vim.diagnostic.severity.HINT]  = icons.diagnostics.Hint,
-        [vim.diagnostic.severity.INFO]  = icons.diagnostics.Info,
+        [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
+        [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+        [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
       },
       -- OPTIONAL: keep number-column highlights similar to old texthl groups
       numhl = {
         [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-        [vim.diagnostic.severity.WARN]  = "DiagnosticSignWarn",
-        [vim.diagnostic.severity.HINT]  = "DiagnosticSignHint",
-        [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
+        [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+        [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+        [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
       },
       -- You can also add linehl = { [sev] = "YourLineHLGroup", ... } if you want.
     },
