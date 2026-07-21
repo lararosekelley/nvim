@@ -1,0 +1,4 @@
+# Format-check only the Lua files staged for this commit.
+files=$(git diff --cached --name-only --diff-filter=ACM -- '*.lua')
+[ -z "$files" ] && exit 0
+echo "$files" | xargs stylua --check

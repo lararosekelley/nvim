@@ -1,0 +1,12 @@
+{
+  "name": "nvim-config",
+  "private": true,
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.0",
+    "@commitlint/config-conventional": "^21.0.0",
+    "husky": "^9.1.7"
+  }
+}
