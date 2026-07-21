@@ -149,6 +149,12 @@ return {
       mason_lspconfig.setup({
         automatic_installation = true,
         ensure_installed = lsp_servers,
+        -- rust-analyzer is managed by rustaceanvim; without this, mason-lspconfig
+        -- auto-enables nvim-lspconfig's rust_analyzer too, spawning a second client
+        -- and doubling every diagnostic. See lua/plugins/rust.lua.
+        automatic_enable = {
+          exclude = { "rust_analyzer" },
+        },
       })
 
       for _, server in pairs(lsp_servers) do
