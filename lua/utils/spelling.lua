@@ -33,27 +33,13 @@ local function update_ltex_clients(word, add)
   end
 end
 
-function M.add_word_to_ltex_dictionary()
-  local word = vim.fn.expand("<cword>")
-
-  if word == nil or word == "" then
-    vim.notify("No word under cursor", vim.log.levels.WARN)
-    return
-  end
-
-  local settings_path = ltex_settings_path()
-  local content = read_ltex_settings()
-
-  if content == "" then
-    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
-    return
-  end
-
-  if content:find('"' .. word .. '"', 1, true) then
-    vim.notify("Word already exists in dictionary: " .. word, vim.log.levels.INFO)
-    return
-  end
-
+--- Insert a word into the en-US dictionary block of an ltex settings file.
+---
+--- @param content string
+--- @param word string
+--- @return string updated
+--- @return integer count number of dictionary blocks rewritten
+function M.add_word(content, word)
   local updated, count = content:gsub('(%["en%-US"%]%s*=%s*){%s*}', '%1{ "' .. word .. '" }', 1)
 
   if count == 0 then
@@ -72,34 +58,18 @@ function M.add_word_to_ltex_dictionary()
     end, 1)
   end
 
-  if count == 0 then
-    vim.notify("Could not locate en-US dictionary block", vim.log.levels.ERROR)
-    return
-  end
-
-  vim.fn.writefile(vim.split(updated, "\n", { plain = true }), settings_path)
-  pcall(vim.cmd, "silent keepjumps normal! zg")
-  update_ltex_clients(word, true)
-  vim.notify("Added to dictionary: " .. word, vim.log.levels.INFO)
+  return updated, count
 end
 
-function M.remove_word_from_ltex_dictionary()
-  local word = vim.fn.expand("<cword>")
-
-  if word == nil or word == "" then
-    vim.notify("No word under cursor", vim.log.levels.WARN)
-    return
-  end
-
-  local settings_path = ltex_settings_path()
-  local content = read_ltex_settings()
-
-  if content == "" then
-    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
-    return
-  end
-
-  local updated, count = content:gsub('(%["en%-US"%]%s*=%s*{)(.-)(}%s*,?)', function(prefix, body, suffix)
+--- Drop a word from the en-US dictionary block of an ltex settings file.
+--- Returns the content unchanged when the word is absent.
+---
+--- @param content string
+--- @param word string
+--- @return string updated
+--- @return integer count number of dictionary blocks rewritten
+function M.remove_word(content, word)
+  return content:gsub('(%["en%-US"%]%s*=%s*{)(.-)(}%s*,?)', function(prefix, body, suffix)
     local entries = {}
 
     for entry in body:gmatch('"(.-)"') do
@@ -147,6 +117,59 @@ function M.remove_word_from_ltex_dictionary()
 
     return prefix .. rebuilt .. suffix
   end, 1)
+end
+
+function M.add_word_to_ltex_dictionary()
+  local word = vim.fn.expand("<cword>")
+
+  if word == nil or word == "" then
+    vim.notify("No word under cursor", vim.log.levels.WARN)
+    return
+  end
+
+  local settings_path = ltex_settings_path()
+  local content = read_ltex_settings()
+
+  if content == "" then
+    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
+    return
+  end
+
+  if content:find('"' .. word .. '"', 1, true) then
+    vim.notify("Word already exists in dictionary: " .. word, vim.log.levels.INFO)
+    return
+  end
+
+  local updated, count = M.add_word(content, word)
+
+  if count == 0 then
+    vim.notify("Could not locate en-US dictionary block", vim.log.levels.ERROR)
+    return
+  end
+
+  vim.fn.writefile(vim.split(updated, "\n", { plain = true }), settings_path)
+  pcall(vim.cmd, "silent keepjumps normal! zg")
+  update_ltex_clients(word, true)
+  vim.notify("Added to dictionary: " .. word, vim.log.levels.INFO)
+end
+
+function M.remove_word_from_ltex_dictionary()
+  local word = vim.fn.expand("<cword>")
+
+  if word == nil or word == "" then
+    vim.notify("No word under cursor", vim.log.levels.WARN)
+    return
+  end
+
+  local settings_path = ltex_settings_path()
+  local content = read_ltex_settings()
+
+  if content == "" then
+    vim.notify("Unable to read settings file", vim.log.levels.ERROR)
+    return
+  end
+
+  local updated, count = M.remove_word(content, word)
 
   if count == 0 then
     vim.notify("Could not locate en-US dictionary block", vim.log.levels.ERROR)

@@ -30,30 +30,30 @@ return {
         },
       })
 
-      local select = require("nvim-treesitter-textobjects.select").select_textobject
+      local select_textobject = require("nvim-treesitter-textobjects.select").select_textobject
 
       -- Function text objects
       vim.keymap.set({ "x", "o" }, "af", function()
-        select("@function.outer", "textobjects")
+        select_textobject("@function.outer", "textobjects")
       end, { desc = "Select outer function" })
       vim.keymap.set({ "x", "o" }, "if", function()
-        select("@function.inner", "textobjects")
+        select_textobject("@function.inner", "textobjects")
       end, { desc = "Select inner function" })
 
       -- Class text objects
       vim.keymap.set({ "x", "o" }, "ac", function()
-        select("@class.outer", "textobjects")
+        select_textobject("@class.outer", "textobjects")
       end, { desc = "Select outer class" })
       vim.keymap.set({ "x", "o" }, "ic", function()
-        select("@class.inner", "textobjects")
+        select_textobject("@class.inner", "textobjects")
       end, { desc = "Select inner class" })
 
       -- Loop text objects
       vim.keymap.set({ "x", "o" }, "al", function()
-        select("@loop.outer", "textobjects")
+        select_textobject("@loop.outer", "textobjects")
       end, { desc = "Select outer loop" })
       vim.keymap.set({ "x", "o" }, "il", function()
-        select("@loop.inner", "textobjects")
+        select_textobject("@loop.inner", "textobjects")
       end, { desc = "Select inner loop" })
 
       -- Register with which-key for documentation

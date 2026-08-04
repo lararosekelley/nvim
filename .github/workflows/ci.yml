@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Stylua
+        uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ github.token }}
+          version: 2.3.1
+          args: --check .
+
+      - name: Install Selene
+        uses: NTBBloodbath/selene-action@v1.0.0
+        with:
+          token: ${{ github.token }}
+          version: 0.29.0
+          args: lua spec
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Lint Markdown
+        run: npx markdownlint-cli2 "**/*.md"
+
+      - name: Lint prose
+        uses: errata-ai/vale-action@v2
+        with:
+          version: 3.9.3
+          files: .
+          vale_flags: "--glob=!{.tests,node_modules,.vale}/**"
+          fail_on_error: true
+
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Lint commit messages
+        uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: commitlint.config.cjs
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        # A config only has to work on the Neovim it is actually run with, plus
+        # nightly as an early warning for breaking changes.
+        nvim: [stable, nightly]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.nvim }}
+
+      - name: Install Just
+        uses: extractions/setup-just@v3
+
+      - name: Test
+        run: just test

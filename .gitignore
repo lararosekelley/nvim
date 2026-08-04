@@ -1,7 +1,9 @@
 .aider.*
-lua_modules
 node_modules/
 .claude/settings.local.json
+
+# Test harness dependencies, cloned by `just install-nvim`
+.tests/
 
 # Created by https://www.toptal.com/developers/gitignore/api/lua
 # Edit at https://www.toptal.com/developers/gitignore?templates=lua

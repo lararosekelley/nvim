@@ -1,4 +1,0 @@
-- repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v2.1.0
-  hooks:
-    - id: stylua

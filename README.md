@@ -10,8 +10,9 @@
 2. [System requirements](#system-requirements)
 3. [Project structure](#project-structure)
 4. [Plugins](#plugins)
-5. [Acknowledgements](#acknowledgements)
-6. [License](#license)
+5. [Development](#development)
+6. [Acknowledgements](#acknowledgements)
+7. [License](#license)
 
 ## Installation
 
@@ -80,6 +81,7 @@ for configuration options.
 - [fzf](https://github.com/junegunn/fzf)
 - `git`
 - `gzip`
+- [just](https://github.com/casey/just) (for the development tasks below)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - `sh`
 - `tar`
@@ -128,6 +130,51 @@ under the [lua/](./lua) directory, broken up by purpose and plugin.
 ## Plugins
 
 [See full plugin configuration here](./lua/plugins).
+
+## Development
+
+Tasks run through [just](https://github.com/casey/just). Install the tooling once:
+
+```bash
+just install
+```
+
+That installs the Node dev dependencies and clones the Neovim plugins the test
+harness needs into `.tests/` (gitignored).
+
+### Testing
+
+Specs live in [spec/](./spec) and run under
+[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)'s busted runner, inside
+a headless Neovim started from [spec/minimal_init.lua](./spec/minimal_init.lua).
+Running in a real Neovim is what makes `vim.*` available to the modules under
+test.
+
+```bash
+just test                       # whole suite
+just test-file spec/util_spec.lua  # one file
+```
+
+Specs must not touch the live configuration. Where a module does file I/O, as
+`utils.spelling` does against the ltex dictionary, the specs cover the pure
+transforms and leave the command wrappers alone. Use `spec.helpers` rather than
+`vim.fn.stdpath("config")` to locate repo files, since the two only coincide
+outside CI.
+
+### Linting and formatting
+
+```bash
+just format    # stylua, in place
+just lint      # stylua --check, selene, markdownlint-cli2, vale
+just check     # format, then lint, then test
+```
+
+A husky `pre-commit` hook runs stylua and selene over the staged Lua files, and
+`commit-msg` runs commitlint against
+[commitlint.config.cjs](./commitlint.config.cjs), which requires a conventional
+commit with a scope from its enum. The same checks run in CI
+([.github/workflows/ci.yml](./.github/workflows/ci.yml)) across Neovim stable
+and nightly.
 
 ## Acknowledgements
 
