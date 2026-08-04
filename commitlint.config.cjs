@@ -42,6 +42,10 @@ module.exports = {
         "tooling",
         "tests",
         "security",
+        // terminal interface
+        "terminal",
+        "tmux",
+        "herdr",
       ],
     ],
   },
