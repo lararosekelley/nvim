@@ -1,7 +1,7 @@
 --- File and text search
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: August 4th, 2026
 
 return {
   -- fuzzy finder
@@ -20,6 +20,18 @@ return {
       },
     },
     opts = {},
+  },
+  -- full-text search across the recoll index (PDFs, office docs, mail, notes)
+  {
+    "lararosekelley/recoll.nvim",
+    dependencies = { "ibhagwan/fzf-lua" },
+    cmd = { "Recoll", "RecollDir", "RecollIndex", "RecollIndexStop" },
+    opts = {},
+    keys = {
+      { "<leader>sr", "<cmd>Recoll<cr>", desc = "Recoll Search" },
+      { "<leader>sR", "<cmd>RecollDir<cr>", desc = "Recoll Search (cwd)" },
+      { "<leader>si", "<cmd>RecollIndex<cr>", desc = "Recoll Update Index" },
+    },
   },
   -- better f and t motions
   {
