@@ -1,6 +1,7 @@
 --- Higharc CLI integration for Neovim
 ---
 --- Author: @lararosekelley
+--- Last Modified: August 3rd, 2026
 
 local icons = require("config.icons").icons.whichkey
 
