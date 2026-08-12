@@ -123,6 +123,7 @@ return {
           "rof",
           "tatin",
           "tarte",
+          "worktree",
         },
       },
     },

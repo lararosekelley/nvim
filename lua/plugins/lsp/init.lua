@@ -7,6 +7,7 @@ local icons = require("config.icons").icons
 local lsp_format = require("utils.lsp").lsp_format
 local lsp_augroup = require("utils.lsp").lsp_augroup
 local lsp_servers = require("utils.lsp").lsp_servers
+local lspconfig_defaults = require("utils.lsp").lspconfig_defaults
 
 return {
   -- lsp and diagnostics
@@ -158,9 +159,20 @@ return {
       })
 
       for _, server in pairs(lsp_servers) do
+        -- servers register their own buffer commands from on_attach, so run theirs
+        -- too rather than replacing it (ts_ls loses :LspTypescriptSourceAction and
+        -- :LspTypescriptGoToSourceDefinition otherwise)
+        local defaults = lspconfig_defaults(server)
+
         -- settings for all language servers
         local opts = {
-          on_attach = handlers.on_attach,
+          on_attach = function(client, bufnr)
+            if defaults.on_attach then
+              defaults.on_attach(client, bufnr)
+            end
+
+            handlers.on_attach(client, bufnr)
+          end,
           capabilities = handlers.capabilities,
         }
 
