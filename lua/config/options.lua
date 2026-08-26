@@ -170,6 +170,3 @@ opt.laststatus = 2
 
 -- update time
 opt.updatetime = 200
-
--- ignore copilot when detecting lsp root
-vim.g.root_lsp_ignore = { "copilot" }

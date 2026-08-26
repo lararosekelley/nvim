@@ -1,7 +1,7 @@
 --- Integration of AI tools and plugins for enhanced coding assistance
 ---
 --- Author: @lararosekelley
---- Last Modified: November 17th, 2025
+--- Last Modified: August 26th, 2026
 
 return {
   -- avante
@@ -25,9 +25,6 @@ return {
             max_tokens = 20480,
           },
         },
-        copilot = {
-          model = "gpt-5",
-        },
       },
       behaviour = {
         auto_suggestions = false, -- enable for automatic code suggestions
@@ -45,7 +42,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      "zbirenbaum/copilot.lua",
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -69,38 +65,6 @@ return {
           file_types = { "markdown", "Avante" },
         },
         ft = { "markdown", "Avante" },
-      },
-    },
-  },
-  -- copilot
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
-    event = "BufReadPost",
-    opts = {
-      -- attach to buffer
-      should_attach = function(bufnr)
-        local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-        local disabled_filetypes = {} -- add disabled filetypes here
-
-        if vim.tbl_contains(disabled_filetypes, filetype) then
-          return false
-        end
-
-        return true
-      end,
-      -- handled by nvim-cmp / blink.cmp
-      suggestion = {
-        enabled = false,
-      },
-      -- handled by nvim-cmp / blink.cmp
-      panel = {
-        enabled = false,
-      },
-      -- filetypes to enable or disable in
-      filetypes = {
-        markdown = false,
       },
     },
   },

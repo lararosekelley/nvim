@@ -17,7 +17,6 @@ return {
       "hrsh7th/cmp-emoji",
       "garyhurtz/cmp_kitty",
       "hrsh7th/cmp-cmdline",
-      "zbirenbaum/copilot-cmp",
       {
         "MattiasMTS/cmp-dbee",
         dependencies = {
@@ -62,7 +61,6 @@ return {
       return {
         -- https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
         sources = {
-          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "nvim_lua" },
           { name = "snippets" },
@@ -120,14 +118,6 @@ return {
     event = { "InsertEnter", "LspAttach" },
     init = function()
       require("cmp_kitty"):setup()
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    event = { "InsertEnter", "LspAttach" },
-    opts = {},
-    config = function(_, opts)
-      require("copilot_cmp").setup(opts)
     end,
   },
 }

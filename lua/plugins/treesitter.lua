@@ -1,21 +1,48 @@
 --- Treesitter config
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: August 25th, 2026
 
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false, -- main branch does not support lazy-loading
     build = ":TSUpdate",
+    init = function()
+      -- override the stalled upstream prisma grammar with our patched copy.
+      -- must be registered before install/update runs. see vendor/tree-sitter-prisma/README.md
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+          require("nvim-treesitter.parsers").prisma = {
+            tier = 2, -- unstable, as upstream has it, so install it by name below
+            install_info = {
+              path = vim.fn.stdpath("config") .. "/vendor/tree-sitter-prisma",
+            },
+          }
+        end,
+      })
+    end,
     config = function()
-      local configs = require("nvim-treesitter.config")
+      require("nvim-treesitter").setup()
+      -- prisma is tier 2, so it is not covered by "stable" and needs naming
+      require("nvim-treesitter").install({ "stable", "prisma" })
 
-      configs.setup({
-        auto_install = true,
-        ensure_installed = "all",
-        ignore_install = { "ipkg" }, -- error on install as of 2025-08-27
-        highlight = { enable = true },
-        indent = { enable = true },
+      -- main branch enables nothing by itself, so start highlighting and
+      -- indenting per buffer. folds stay with utils.foldexpr.
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("ts_activate", { clear = true }),
+        callback = function(args)
+          local buf = args.buf
+          local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+
+          if not (lang and pcall(vim.treesitter.start, buf, lang)) then
+            return
+          end
+
+          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
     end,
   },

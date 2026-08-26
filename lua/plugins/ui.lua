@@ -66,7 +66,6 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "AndreM222/copilot-lualine",
       {
         "lewis6991/gitsigns.nvim",
         opts = {
@@ -133,23 +132,6 @@ return {
           right = 0,
         },
       }
-      local copilot = {
-        "copilot",
-        show_colors = true,
-        show_loading = true,
-        symbols = {
-          spinners = "dots",
-          status = {
-            hl = {
-              enabled = Snacks.util.color("DiagnosticVirtualTextInfo"),
-              disabled = Snacks.util.color("CmpGhostText"),
-              sleep = Snacks.util.color("CmpGhostText"),
-              warning = Snacks.util.color("DiagnosticVirtualTextWarn"),
-              unknown = Snacks.util.color("DiagnosticVirtualTextError"),
-            },
-          },
-        },
-      }
 
       local opts = {
         options = {
@@ -162,7 +144,6 @@ return {
           lualine_b = { "branch" },
           lualine_c = { filename, diagnostics, filetype },
           lualine_x = {
-            copilot,
             Snacks.profiler.status(),
             {
               function()
