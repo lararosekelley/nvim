@@ -114,10 +114,12 @@ return {
   },
   {
     "garyhurtz/cmp_kitty",
-    cond = not vim.env.TMUX,
+    cond = function()
+      return require("utils.kitty_completion").enabled()
+    end,
     event = { "InsertEnter", "LspAttach" },
-    init = function()
-      require("cmp_kitty"):setup()
+    config = function()
+      require("utils.kitty_completion").setup()
     end,
   },
 }

@@ -28,6 +28,7 @@ module.exports = {
         "files",
         "search",
         "terminal",
+        "kitty",
         "sessions",
         // writing & knowledge
         "wiki",

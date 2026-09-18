@@ -119,8 +119,18 @@ Afterwards, set the socket Kitty will listen to by
 Example:
 
 ```conf
-listen_on unix:@kitty
+listen_on unix:@kitty-{kitty_pid}
 ```
+
+Kitty completion requires a reachable `KITTY_LISTEN_ON`, not just a Kitty
+terminal. Persistent shells or terminal multiplexers can retain a stale socket
+after Kitty restarts. Connection failures fall back to the other completion
+sources, warn once per Neovim session, and retry on activity with a 5–60 second
+backoff. Requests time out after 250 ms.
+
+After refreshing `$KITTY_LISTEN_ON` inside Neovim from a fresh Kitty shell, run
+`:CmpKittyReconnect` to retry immediately. The config does not guess another
+Kitty instance's socket.
 
 ## Project structure
 
