@@ -21,6 +21,9 @@ return {
           end,
           default_settings = {
             ["rust-analyzer"] = {
+              -- Separate target dir so on-save checks don't hold the build
+              -- lock that `cargo run` / `cargo watch` need.
+              cargo = { targetDir = true },
               checkOnSave = true,
               check = {
                 command = "clippy",
