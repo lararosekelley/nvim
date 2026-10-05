@@ -1,7 +1,7 @@
 --- Treesitter config
 ---
 --- Author: @lararosekelley
---- Last Modified: August 25th, 2026
+--- Last Modified: October 4th, 2026
 
 return {
   {
@@ -26,8 +26,28 @@ return {
     end,
     config = function()
       require("nvim-treesitter").setup()
-      -- prisma is tier 2, so it is not covered by "stable" and needs naming
-      require("nvim-treesitter").install({ "stable", "prisma" })
+      -- "stable" is tier 1, only ten parsers; most languages, prisma included,
+      -- are tier 2 and have to be named
+      require("nvim-treesitter").install({
+        "stable",
+        "prisma",
+        "bash",
+        "c",
+        "cmake",
+        "cpp",
+        "javascript",
+        "json",
+        "lua",
+        "make",
+        "markdown",
+        "markdown_inline",
+        "qmljs",
+        "rust",
+        "toml",
+        "tsx",
+        "typescript",
+        "yaml",
+      })
 
       -- main branch enables nothing by itself, so start highlighting and
       -- indenting per buffer. folds stay with utils.foldexpr.
