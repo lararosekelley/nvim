@@ -1,7 +1,7 @@
 --- LSP configuration
 ---
 --- Author: @lararosekelley
---- Last Modified: September 1st, 2025
+--- Last Modified: October 4th, 2026
 
 local icons = require("config.icons").icons
 local lsp_format = require("utils.lsp").lsp_format
@@ -53,13 +53,20 @@ return {
           extra_args = { "--dialect", "postgres" }, -- prefer postgresql
         }),
         -- formatting
+        -- the system clang-format, which matches what Fedora-based CI runs
+        formatting.clang_format,
         formatting.black.with({
           extra_args = { "--fast" },
           prefer_local = ".venv/bin",
         }),
         formatting.google_java_format,
         formatting.prettierd.with({
-          extra_filetypes = { "toml", "vimwiki" },
+          -- not toml: prettier has no TOML parser without a plugin; taplo checks it instead
+          extra_filetypes = { "vimwiki" },
+        }),
+        -- Qt installs qmlformat outside PATH on Fedora
+        formatting.qmlformat.with({
+          command = vim.fn.exepath("qmlformat") ~= "" and "qmlformat" or "/usr/lib64/qt6/bin/qmlformat",
         }),
         formatting.stylua,
       }
@@ -185,6 +192,16 @@ return {
 
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
+      end
+
+      -- qmlls ships with Qt rather than mason; a project's build writes the
+      -- .qmlls.ini it needs to find its QML modules
+      if vim.fn.executable("qmlls") == 1 then
+        vim.lsp.config("qmlls", {
+          on_attach = handlers.on_attach,
+          capabilities = handlers.capabilities,
+        })
+        vim.lsp.enable("qmlls")
       end
     end,
   },
