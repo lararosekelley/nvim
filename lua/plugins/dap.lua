@@ -1,7 +1,7 @@
 --- Debug Adapter Protocol (DAP) configuration
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: October 4th, 2026
 
 local icons = require("config.icons").icons
 
@@ -202,7 +202,32 @@ return {
       },
     },
     config = function()
+      local dap = require("dap")
+
       require("mason-nvim-dap").setup()
+
+      -- gdb 14 and later speak DAP natively, so C and C++ need no extra adapter
+      dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+      }
+      dap.configurations.cpp = {
+        {
+          name = "Launch executable",
+          type = "gdb",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          program = function()
+            -- offer a CMake preset build's app first, when there is one
+            local guess = vim.fn.getcwd() .. "/build/dev/src/gui/callie-gui"
+            local default = vim.fn.filereadable(guess) == 1 and guess or (vim.fn.getcwd() .. "/")
+
+            return vim.fn.input("Executable: ", default, "file")
+          end,
+        },
+      }
+      dap.configurations.c = dap.configurations.cpp
 
       vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 

@@ -1,7 +1,7 @@
 --- LSP-specific utility functions for Neovim configuration
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: October 4th, 2026
 
 local M = {}
 
@@ -24,9 +24,11 @@ M.lsp_servers = {
   "solargraph",
   "sqlls",
   "lua_ls",
+  "neocmake",
   "oxlint",
   "stylelint_lsp",
   "svelte",
+  "taplo",
   "tailwindcss",
   "terraformls",
   "ts_ls",
