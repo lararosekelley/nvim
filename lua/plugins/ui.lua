@@ -1,7 +1,7 @@
 --- UI enhancements
 ---
 --- Author: @lararosekelley
---- Last Modified: August 27th, 2025
+--- Last Modified: October 17th, 2026
 
 local map = require("utils").map
 local icons = require("config.icons").icons
@@ -12,9 +12,6 @@ return {
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
-    dependencies = {
-      "catppuccin/nvim",
-    },
     keys = {
       -- leader commands
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
@@ -32,7 +29,6 @@ return {
       { "]B", "<Cmd>BufferLineMoveNext<CR>", desc = "Move buffer next" },
     },
     opts = {
-      highlights = require("catppuccin.special.bufferline").get_theme(),
       options = {
         separator_style = "slant",
         hover = {
