@@ -1,21 +1,18 @@
 --- Load themes for Neovim
 ---
 --- Author: @lararosekelley
---- Last Modified: August 22nd, 2025
+--- Last Modified: October 17th, 2026
 
 return {
-  -- catppuccin
+  -- callie, from greylocklabs/themes; follows 'background', with callie-light
+  -- for the light variant
   {
-    "catppuccin/nvim",
+    "greylocklabs/themes",
+    name = "callie",
     priority = 1000,
     lazy = false,
-    name = "catppuccin",
-    opts = {
-      -- see bufferline.nvim config in ui.lua for its specific fix
-      auto_integrations = true,
-    },
     config = function()
-      vim.cmd.colorscheme("catppuccin")
+      vim.cmd.colorscheme("callie")
     end,
   },
 }
