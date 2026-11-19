@@ -46,6 +46,7 @@ return {
         flake8_diagnostics.with({
           prefer_local = ".venv/bin",
         }),
+        require("utils.kubernetes").kube_linter_source(),
         diagnostics.markdownlint_cli2.with({
           extra_filetypes = { "vimwiki" },
         }),
@@ -122,6 +123,7 @@ return {
         "black",
         "flake8",
         "google-java-format",
+        "kube-linter",
         "markdownlint-cli2",
         "vale",
         "prettierd",

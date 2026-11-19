@@ -93,6 +93,12 @@ map("n", "<leader>ua", spelling.add_word_to_ltex_dictionary, { desc = "Add word 
 -- remove word under cursor from LTEX dictionary
 map("n", "<leader>ur", spelling.remove_word_from_ltex_dictionary, { desc = "Remove word from LTEX dictionary" })
 
+-- kubernetes
+map("n", "<leader>kd", "<cmd>KubeDryRun<cr>", { desc = "Server-side dry run" })
+map("n", "<leader>kc", "<cmd>KubeContext<cr>", { desc = "Pick context" })
+map("n", "<leader>ks", "<cmd>KubeSyncSchemas<cr>", { desc = "Sync schemas from cluster" })
+map("n", "<leader>kv", "<cmd>KubeSchemaVersion<cr>", { desc = "Pick schema version" })
+
 -- find and replace under cursor
 map("n", "<leader>S", ":%s/\\<<C-r><C-w>\\>/", { desc = "Find and replace under cursor" })
 

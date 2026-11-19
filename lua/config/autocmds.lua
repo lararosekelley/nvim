@@ -47,6 +47,23 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 -- edit neovim config
 vim.api.nvim_create_user_command("Config", ":e ~/.config/nvim/init.lua", { bang = true })
 
+-- kubernetes
+vim.api.nvim_create_user_command("KubeDryRun", function()
+  require("utils.kubernetes").dry_run()
+end, { desc = "Validate buffer against the cluster with a server-side dry run" })
+
+vim.api.nvim_create_user_command("KubeContext", function()
+  require("utils.kubernetes").select_context()
+end, { desc = "Pick the context dry runs and synced schemas use" })
+
+vim.api.nvim_create_user_command("KubeSyncSchemas", function()
+  require("utils.kubernetes").sync_schemas()
+end, { desc = "Fetch the cluster's schemas, CRDs included, for offline validation" })
+
+vim.api.nvim_create_user_command("KubeSchemaVersion", function()
+  require("utils.kubernetes").select_schema_version()
+end, { desc = "Pick the Kubernetes version manifests are validated against" })
+
 -- show diagnostics on cursor hold
 vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 

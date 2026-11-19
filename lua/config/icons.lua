@@ -25,6 +25,7 @@ return {
       find = "󰥨 ",
       fold = " ",
       go = "󰈇 ",
+      kubernetes = "󱃾 ",
       lsp = "󰅩 ",
       next = " ",
       prev = " ",

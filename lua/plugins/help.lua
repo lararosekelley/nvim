@@ -23,6 +23,7 @@ return {
           { "<leader>d", group = "Diagnostics / Debug", icon = { icon = icons.diagnostics, color = "green" } },
           { "<leader>f", group = "Find", icon = { icon = icons.find, color = "green" } },
           { "<leader>g", group = "Git" },
+          { "<leader>k", group = "Kubernetes", icon = { icon = icons.kubernetes, color = "blue" } },
           { "<leader>l", group = "LSP", icon = { icon = icons.lsp, color = "purple" } },
           { "<leader>s", group = "Search", icon = { icon = icons.search, color = "green" } },
           { "<leader>u", group = "Spelling & Grammar", icon = { icon = icons.ui, color = "cyan" } },
