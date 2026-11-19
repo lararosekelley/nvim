@@ -35,6 +35,7 @@ return {
         "c",
         "cmake",
         "cpp",
+        "helm",
         "javascript",
         "json",
         "lua",

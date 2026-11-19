@@ -138,6 +138,8 @@ return {
     dependencies = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
+      "b0o/SchemaStore.nvim",
+      "cenk1cenk2/schema-companion.nvim",
     },
     keys = {
       { "<leader>M", "<cmd>Mason<cr>", desc = "Mason" },
@@ -188,7 +190,13 @@ return {
           server_opts = {}
         end
 
-        opts = vim.tbl_deep_extend("force", server_opts, opts)
+        -- a settings module may be a function that wraps the finished config,
+        -- for plugins that hook on_attach themselves
+        if type(server_opts) == "function" then
+          opts = server_opts(opts)
+        else
+          opts = vim.tbl_deep_extend("force", server_opts, opts)
+        end
 
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
@@ -204,6 +212,40 @@ return {
         vim.lsp.enable("qmlls")
       end
     end,
+  },
+  -- SchemaStore catalog for jsonls and yamlls
+  {
+    "b0o/SchemaStore.nvim",
+    lazy = true,
+  },
+  -- picks yaml schemas from file content, e.g. kubernetes kind/apiVersion and CRDs
+  {
+    "cenk1cenk2/schema-companion.nvim",
+    lazy = true,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+    keys = {
+      {
+        "<leader>lj",
+        function()
+          require("schema-companion").select_matching_schema()
+        end,
+        desc = "Select Matching Schema",
+      },
+      {
+        "<leader>lJ",
+        function()
+          require("schema-companion").select_schema()
+        end,
+        desc = "Select Any Schema",
+      },
+    },
+  },
+  -- helm filetypes, template conceal and block highlighting for helm_ls
+  {
+    "qvalentin/helm-ls.nvim",
+    ft = "helm",
+    opts = {},
   },
   -- better lua lsp performance
   {

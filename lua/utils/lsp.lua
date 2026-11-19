@@ -14,6 +14,7 @@ M.lsp_servers = {
   "eslint",
   "gopls",
   "graphql",
+  "helm_ls",
   "html",
   "jdtls",
   "jsonls",
