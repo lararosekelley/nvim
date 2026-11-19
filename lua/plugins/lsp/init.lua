@@ -162,8 +162,9 @@ return {
         -- rust-analyzer is managed by rustaceanvim; without this, mason-lspconfig
         -- auto-enables nvim-lspconfig's rust_analyzer too, spawning a second client
         -- and doubling every diagnostic. See lua/plugins/rust.lua.
+        -- ltex is the unmaintained predecessor of ltex_plus and must not run beside it
         automatic_enable = {
-          exclude = { "rust_analyzer" },
+          exclude = { "rust_analyzer", "ltex" },
         },
       })
 
