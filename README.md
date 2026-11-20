@@ -41,7 +41,8 @@ For full LSP support:
 
 - C (with any compiler, such as `cc`, `clang`, `gcc`, or `zig`)
 - Go
-- Java (with `javac`)
+- Java, as a full JDK with `javac` (a JRE is not enough; on Fedora, install
+  `java-<version>-openjdk-devel` for the version `java` points to)
 - Julia
 - Lua (with `luarocks`)
 - Node.js (with `npm` and `yarn`)
@@ -86,6 +87,8 @@ for configuration options.
 - `sh`
 - `tar`
 - [lazygit](https://github.com/jesseduffield/lazygit)
+- [lldb](https://lldb.llvm.org), whose `lldb-dap` debugs Rust through
+  rustaceanvim
 - [make](https://www.gnu.org/software/make)
 - [tmux](https://github.com/tmux/tmux)
 - [tree-sitter](https://github.com/tree-sitter/tree-sitter)
@@ -98,6 +101,8 @@ For terminal image previews:
 - `chafa`
 - [ueberzugpp](https://github.com/jstkdng/ueberzugpp)
 - [viu](https://github.com/atanunq/viu)
+- [tectonic](https://tectonic-typesetting.github.io) (or `pdflatex`), for
+  rendering LaTeX math in snacks.nvim images
 
 When Neovim is next opened, plugins will be installed and configured automatically.
 
