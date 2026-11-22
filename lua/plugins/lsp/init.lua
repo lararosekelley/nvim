@@ -158,18 +158,8 @@ return {
         },
       })
 
-      mason_lspconfig.setup({
-        automatic_installation = true,
-        ensure_installed = lsp_servers,
-        -- rust-analyzer is managed by rustaceanvim; without this, mason-lspconfig
-        -- auto-enables nvim-lspconfig's rust_analyzer too, spawning a second client
-        -- and doubling every diagnostic. See lua/plugins/rust.lua.
-        -- ltex is the unmaintained predecessor of ltex_plus and must not run beside it
-        automatic_enable = {
-          exclude = { "rust_analyzer", "ltex" },
-        },
-      })
-
+      -- configure servers before mason-lspconfig auto-enables them, or buffers already
+      -- open at startup attach a client that only has nvim-lspconfig's defaults
       for _, server in pairs(lsp_servers) do
         -- servers register their own buffer commands from on_attach, so run theirs
         -- too rather than replacing it (ts_ls loses :LspTypescriptSourceAction and
@@ -204,6 +194,18 @@ return {
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
       end
+
+      mason_lspconfig.setup({
+        automatic_installation = true,
+        ensure_installed = lsp_servers,
+        -- rust-analyzer is managed by rustaceanvim; without this, mason-lspconfig
+        -- auto-enables nvim-lspconfig's rust_analyzer too, spawning a second client
+        -- and doubling every diagnostic. See lua/plugins/rust.lua.
+        -- ltex is the unmaintained predecessor of ltex_plus and must not run beside it
+        automatic_enable = {
+          exclude = { "rust_analyzer", "ltex" },
+        },
+      })
 
       -- qmlls ships with Qt rather than mason; a project's build writes the
       -- .qmlls.ini it needs to find its QML modules
