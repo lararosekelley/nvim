@@ -27,12 +27,17 @@ jobs:
           version: 2.3.1
           args: --check .
 
+      # straight from selene's releases; the action that wrapped this is gone
       - name: Install Selene
-        uses: NTBBloodbath/selene-action@v1.0.0
-        with:
-          token: ${{ github.token }}
-          version: 0.29.0
-          args: lua spec
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/selene.zip" \
+            https://github.com/Kampfkarren/selene/releases/download/0.29.0/selene-0.29.0-linux.zip
+          unzip -q "$RUNNER_TEMP/selene.zip" -d "$RUNNER_TEMP/selene"
+          chmod +x "$RUNNER_TEMP/selene/selene"
+          echo "$RUNNER_TEMP/selene" >> "$GITHUB_PATH"
+
+      - name: Lint Lua with Selene
+        run: selene lua spec
 
       - name: Setup Node
         uses: actions/setup-node@v6
