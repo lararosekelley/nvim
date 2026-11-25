@@ -22,6 +22,17 @@ Clone this repository to your `~/.config/nvim/` directory:
 git clone git@github.com:lararosekelley/nvim ~/.config/nvim
 ```
 
+Then install what it needs, as listed under
+[System requirements](#system-requirements):
+
+```bash
+~/.config/nvim/scripts/install-deps
+```
+
+It skips anything already installed, asks before installing system packages with
+`dnf` or `pacman`, and ends with a list of anything to install by hand. Pass
+`--dry-run` to see the plan first, or `--yes` to skip the question.
+
 ### Fonts
 
 Install a font with support for icons on your system. I recommend using the `getnf`

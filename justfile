@@ -27,6 +27,10 @@ install-nvim:
 clean:
     rm -rf .tests
 
+# Install the system packages and tools the README lists; safe to rerun
+deps *args:
+    scripts/install-deps {{ args }}
+
 # Testing
 # -------
 
@@ -34,6 +38,11 @@ clean:
 test: install-nvim
     nvim --headless --noplugin -u spec/minimal_init.lua \
         -c "PlenaryBustedDirectory spec/ { minimal_init = 'spec/minimal_init.lua' }"
+
+# Check scripts/install-deps against fake package managers
+test-deps:
+    shellcheck scripts/install-deps scripts/test-install-deps
+    scripts/test-install-deps
 
 # Run a single spec file
 test-file file: install-nvim

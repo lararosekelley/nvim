@@ -1,0 +1,283 @@
+#!/usr/bin/env bash
+#
+# Install what this config needs, as listed in the README: system packages,
+# then the Rust, Node, Ruby, and Python tools and language providers.
+#
+# Safe to rerun on a partly set-up machine. Anything already installed is left
+# alone, and nothing is removed or upgraded. System packages are installed only
+# after asking, or with --yes. Whatever can't be installed here is listed at the
+# end to do by hand.
+#
+# Usage: scripts/install-deps [--yes] [--dry-run]
+
+set -uo pipefail
+
+yes=false
+dry_run=false
+for arg in "$@"; do
+  case "$arg" in
+    -y | --yes) yes=true ;;
+    -n | --dry-run) dry_run=true ;;
+    -h | --help)
+      echo "usage: scripts/install-deps [--yes] [--dry-run]"
+      exit 0
+      ;;
+    *)
+      echo "install-deps: unknown option: $arg" >&2
+      exit 2
+      ;;
+  esac
+done
+
+manual=()
+failed=()
+
+have() { command -v "$1" > /dev/null 2>&1; }
+
+step() { printf '\n== %s\n' "$1"; }
+
+# Run a command, or print it under --dry-run. A failure is recorded for the
+# summary rather than stopping the script.
+run() {
+  if $dry_run; then
+    printf '  would run: %s\n' "$*"
+    return 0
+  fi
+  printf '  running: %s\n' "$*"
+  "$@" || {
+    failed+=("$*")
+    return 1
+  }
+}
+
+# Ask before something that needs sudo or another prompt. Without a terminal,
+# and without --yes, the answer is no and the work is reported instead.
+confirm() {
+  $yes && return 0
+  $dry_run && return 0
+  [ -t 0 ] || return 1
+  local answer
+  read -r -p "$1 [y/N] " answer
+  [[ "$answer" =~ ^[Yy]$ ]]
+}
+
+detect_distro() {
+  local file=${INSTALL_DEPS_OS_RELEASE:-/etc/os-release} ID="" ID_LIKE=""
+  [ -r "$file" ] || {
+    echo unknown
+    return
+  }
+  # shellcheck source=/dev/null
+  . "$file"
+  case " $ID $ID_LIKE " in
+    *" fedora "*) echo fedora ;;
+    *" arch "*) echo arch ;;
+    *) echo unknown ;;
+  esac
+}
+
+distro=$(detect_distro)
+
+# command, Fedora package, Arch package; "-" where the distro has none and a
+# fallback below covers it
+packages=(
+  "nvim neovim neovim"
+  "cc gcc gcc"
+  "make make make"
+  "git git git"
+  "curl curl curl"
+  "wget wget wget"
+  "gzip gzip gzip"
+  "tar tar tar"
+  "go golang go"
+  "javac java-latest-openjdk-devel jdk-openjdk"
+  "julia julia julia"
+  "lua lua lua"
+  "luarocks luarocks luarocks"
+  "node nodejs nodejs"
+  "npm nodejs-npm npm"
+  "ruby ruby ruby"
+  "gem rubygems ruby"
+  "php php-cli php"
+  "composer composer composer"
+  "python3 python3 python"
+  "pipx pipx python-pipx"
+  "cargo rustup rustup"
+  "fd fd-find fd"
+  "fzf fzf fzf"
+  "rg ripgrep ripgrep"
+  "lazygit lazygit lazygit"
+  "lldb lldb lldb"
+  "tmux tmux tmux"
+  "tree-sitter tree-sitter-cli tree-sitter-cli"
+  "chafa chafa chafa"
+  "just just just"
+  "ueberzugpp - ueberzugpp"
+  "viu - viu"
+  "stylua - stylua"
+  "tectonic - tectonic"
+  "vale - vale"
+  "markdownlint-cli2 - markdownlint-cli2"
+  "mmdc - mermaid-cli"
+)
+
+step "System packages ($distro)"
+wanted=()
+for entry in "${packages[@]}"; do
+  read -r command fedora arch <<< "$entry"
+  have "$command" && continue
+  case "$distro" in
+    fedora) package=$fedora ;;
+    arch) package=$arch ;;
+    *) package="-" ;;
+  esac
+  [ "$package" = "-" ] && continue
+  case " ${wanted[*]} " in *" $package "*) continue ;; esac
+  wanted+=("$package")
+done
+
+if [ "$distro" = unknown ]; then
+  manual+=("system packages: this distro isn't recognized; see the README's requirements")
+elif [ ${#wanted[@]} -eq 0 ]; then
+  echo "  all present"
+else
+  case "$distro" in
+    fedora) install=(sudo dnf install -y "${wanted[@]}") ;;
+    arch) install=(sudo pacman -S --needed --noconfirm "${wanted[@]}") ;;
+  esac
+  if confirm "Install with ${install[*]}?"; then
+    run "${install[@]}"
+  else
+    manual+=("system packages: ${install[*]}")
+  fi
+fi
+
+step "Rust"
+if have cargo; then
+  echo "  cargo present"
+elif have rustup; then
+  run rustup default stable
+  PATH="$HOME/.cargo/bin:$PATH"
+else
+  manual+=("Rust: install rustup, then run 'rustup default stable'")
+fi
+
+# Arch packages these; elsewhere, build them with cargo
+for crate in viu stylua tectonic; do
+  have "$crate" && continue
+  [ "$distro" = arch ] && continue
+  if have cargo; then
+    run cargo install --locked "$crate"
+  else
+    manual+=("$crate: cargo install --locked $crate")
+  fi
+done
+
+step "Node packages"
+npm_global_writable() {
+  local prefix
+  prefix=$(npm prefix -g 2> /dev/null) || return 1
+  [ -w "$prefix/lib" ] || [ -w "$prefix" ]
+}
+npm_missing=()
+have yarn || npm_missing+=(yarn)
+have prettierd || npm_missing+=(@fsouza/prettierd)
+# Arch packages these two; elsewhere they come from npm
+if [ "$distro" != arch ]; then
+  have markdownlint-cli2 || npm_missing+=(markdownlint-cli2)
+  have mmdc || npm_missing+=(@mermaid-js/mermaid-cli)
+fi
+if have npm && ! npm ls -g --depth=0 neovim > /dev/null 2>&1; then
+  npm_missing+=(neovim)
+fi
+if [ ${#npm_missing[@]} -eq 0 ]; then
+  echo "  all present"
+elif ! have npm; then
+  manual+=("npm packages, once Node is installed: npm install -g ${npm_missing[*]}")
+elif npm_global_writable; then
+  run npm install -g "${npm_missing[@]}"
+  have nodenv && run nodenv rehash
+else
+  manual+=("npm packages (npm's global folder isn't writable; use nodenv, or set a user prefix): npm install -g ${npm_missing[*]}")
+fi
+
+step "Ruby provider"
+if ! have gem; then
+  manual+=("Ruby neovim gem, once Ruby is installed: gem install neovim")
+elif gem list -i '^neovim$' > /dev/null 2>&1; then
+  echo "  neovim gem present"
+elif [ -w "$(gem env gemdir 2> /dev/null)" ]; then
+  run gem install neovim
+  have rbenv && run rbenv rehash
+else
+  run gem install --user-install neovim
+fi
+
+step "Python tools"
+for tool in black flake8 sqlfluff latex2text; do
+  have "$tool" && continue
+  package=$tool
+  [ "$tool" = latex2text ] && package=pylatexenc
+  if have pipx; then
+    run pipx install "$package"
+  else
+    manual+=("$tool: pipx install $package")
+  fi
+done
+
+step "Python provider (pyenv virtualenv neovim3)"
+venv="${PYENV_ROOT:-$HOME/.pyenv}/versions/neovim3"
+if [ -e "$venv" ]; then
+  if "$venv/bin/python" -c 'import pynvim' > /dev/null 2>&1; then
+    echo "  neovim3 has pynvim"
+  else
+    run "$venv/bin/python" -m pip install pynvim
+  fi
+elif ! have pyenv; then
+  manual+=("Python provider: install pyenv and pyenv-virtualenv, then rerun")
+elif ! grep -qx virtualenv <<< "$(pyenv commands 2> /dev/null)"; then
+  manual+=("Python provider: install the pyenv-virtualenv plugin, then rerun")
+else
+  version=$(pyenv latest -k 3.14 2> /dev/null)
+  if [ -z "$version" ]; then
+    manual+=("Python provider: pyenv doesn't know Python 3.14; update pyenv, then rerun")
+  else
+    run pyenv install -s "$version" \
+      && run pyenv virtualenv "$version" neovim3 \
+      && run "$venv/bin/python" -m pip install pynvim
+  fi
+fi
+
+step "Other tools"
+if ! have google-java-format; then
+  if [ "$distro" = arch ] && have paru && confirm "Install google-java-format from the AUR with paru?"; then
+    run paru -S --needed google-java-format
+  else
+    manual+=("google-java-format: https://github.com/google/google-java-format/releases")
+  fi
+fi
+if ! have vale; then
+  manual+=("vale: https://vale.sh/docs/install")
+fi
+if ! have ueberzugpp; then
+  manual+=("ueberzugpp: https://github.com/jstkdng/ueberzugpp#install")
+fi
+# grep reads a captured list: piping fc-list into grep -q would fail under
+# pipefail once grep exits early
+if ! grep -qi 'nerd font' <<< "$(fc-list 2> /dev/null)"; then
+  manual+=("a Nerd Font: https://github.com/ronniedroid/getnf")
+fi
+
+step "Summary"
+if [ ${#manual[@]} -eq 0 ] && [ ${#failed[@]} -eq 0 ]; then
+  echo "  everything is installed"
+fi
+if [ ${#manual[@]} -gt 0 ]; then
+  echo "  to do by hand:"
+  printf '    - %s\n' "${manual[@]}"
+fi
+if [ ${#failed[@]} -gt 0 ]; then
+  echo "  failed, fix and rerun:"
+  printf '    - %s\n' "${failed[@]}"
+  exit 1
+fi
