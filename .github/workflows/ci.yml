@@ -53,6 +53,18 @@ jobs:
           vale_flags: "--glob=!{.tests,node_modules,.vale}/**"
           fail_on_error: true
 
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Lint scripts
+        run: shellcheck scripts/install-deps scripts/test-install-deps
+
+      - name: Test install-deps
+        run: scripts/test-install-deps
+
   commitlint:
     runs-on: ubuntu-latest
     steps:

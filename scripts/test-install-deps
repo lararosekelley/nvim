@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+#
+# Run install-deps against fake package managers in a throwaway home, and check
+# what it installs on a fresh, a partly set-up, and a fully set-up machine.
+#
+# Usage: scripts/test-install-deps
+
+set -euo pipefail
+
+script="$(cd "$(dirname "$0")" && pwd)/install-deps"
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+failures=0
+
+# what install-deps itself runs, taken from the real system
+sys="$tmp/sys"
+mkdir -p "$sys"
+for command in bash env grep; do
+  ln -s "$(command -v "$command")" "$sys/$command"
+done
+
+all_tools=(
+  nvim cc make git curl wget gzip tar go javac julia lua luarocks node npm ruby
+  gem php composer python3 pipx cargo fd fzf rg lazygit lldb tmux tree-sitter
+  chafa just ueberzugpp viu stylua tectonic vale markdownlint-cli2 mmdc yarn
+  prettierd black flake8 sqlfluff latex2text google-java-format pyenv
+)
+
+# A machine: a bin directory of stubs, a home, a log of every stub call, and an
+# os-release naming the distro.
+machine() {
+  dir="$tmp/$1"
+  mkdir -p "$dir/bin" "$dir/home"
+  : > "$dir/log"
+  printf 'ID=%s\n' "$2" > "$dir/os-release"
+}
+
+# A stub logs its name and arguments, then runs an optional body.
+stub() {
+  local name=$1 body=${2:-true}
+  printf '#!/usr/bin/env bash\necho "%s $*" >> "%s/log"\n%s\n' \
+    "$name" "$dir" "$body" > "$dir/bin/$name"
+  chmod +x "$dir/bin/$name"
+}
+
+# Package managers and installers, so their calls show up in the log.
+installers() {
+  stub sudo
+  stub rustup
+  stub paru
+}
+
+# Every tool installed, every provider in place, and a Nerd Font.
+configured() {
+  local tool
+  for tool in "${all_tools[@]}"; do stub "$tool"; done
+  # $1 is the stub's own argument, so it stays unexpanded here
+  # shellcheck disable=SC2016
+  stub npm 'case "$1" in prefix) echo "'"$dir"'/npm" ;; esac'
+  mkdir -p "$dir/npm/lib"
+  # shellcheck disable=SC2016
+  stub gem 'case "$1" in env) echo "'"$dir"'/gems" ;; esac'
+  stub pyenv
+  stub fc-list 'echo "/usr/share/fonts/Hack.ttf: Hack Nerd Font"'
+  mkdir -p "$dir/home/.pyenv/versions/neovim3/bin"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$dir/home/.pyenv/versions/neovim3/bin/python"
+  chmod +x "$dir/home/.pyenv/versions/neovim3/bin/python"
+}
+
+run() {
+  status=0
+  output=$(PATH="$dir/bin:$sys" HOME="$dir/home" INSTALL_DEPS_OS_RELEASE="$dir/os-release" \
+    "$sys/bash" "$script" "$@" < /dev/null 2>&1) || status=$?
+}
+
+check() {
+  local description=$1
+  shift
+  if "$@"; then
+    printf 'ok   %s\n' "$description"
+  else
+    printf 'FAIL %s\n' "$description"
+    printf '%s\n' "$output" | sed 's/^/     | /'
+    failures=$((failures + 1))
+  fi
+}
+
+says() { grep -qF -- "$1" <<< "$output"; }
+logged() { grep -qF -- "$1" "$dir/log"; }
+not_logged() { ! grep -qE -- "$1" "$dir/log"; }
+
+# A fresh Arch machine: the plan uses Arch's names, and the tools Arch packages
+# are not also built with cargo or npm.
+machine arch-fresh arch
+installers
+run --dry-run
+check "arch: pacman installs the system packages" says "sudo pacman -S --needed --noconfirm neovim"
+check "arch: Arch package names" says "jdk-openjdk"
+check "arch: mermaid-cli comes from pacman" says " mermaid-cli"
+check "arch: no cargo fallback" eval '! says "cargo install"'
+check "arch: dry run calls nothing" not_logged 'sudo|rustup|paru'
+
+# A fresh Fedora machine: Fedora's names, with cargo for what Fedora lacks.
+machine fedora-fresh fedora
+installers
+run --dry-run
+check "fedora: dnf with Fedora names" says "sudo dnf install -y neovim"
+check "fedora: fd-find and the JDK" eval 'says "fd-find" && says "java-latest-openjdk-devel"'
+check "fedora: vale and ueberzugpp left to do by hand" eval 'says "vale: " && says "ueberzugpp: "'
+
+# A fully set-up machine, without a terminal or --yes: nothing to do.
+machine configured fedora
+configured
+installers
+run
+check "configured: exits cleanly" test "$status" -eq 0
+check "configured: everything is installed" says "everything is installed"
+check "configured: installs nothing" not_logged 'sudo|install|rehash|virtualenv'
+
+# A partly set-up machine: only the gaps are filled, and a second run, once
+# those installs exist, changes nothing.
+machine partial fedora
+configured
+installers
+rm "$dir/bin/fd" "$dir/bin/stylua" "$dir/bin/black"
+run --yes
+check "partial: dnf installs only fd-find" logged "sudo dnf install -y fd-find"
+check "partial: one dnf call" test "$(grep -c '^sudo' "$dir/log")" -eq 1
+check "partial: cargo builds stylua" logged "cargo install --locked stylua"
+check "partial: pipx installs black" logged "pipx install black"
+stub fd
+stub stylua
+stub black
+: > "$dir/log"
+run --yes
+check "partial: second run installs nothing" not_logged 'sudo|install'
+
+# No terminal and no --yes: never sudo, report the command instead.
+machine no-terminal fedora
+configured
+installers
+rm "$dir/bin/fd"
+run
+check "no terminal: no sudo" not_logged '^sudo'
+check "no terminal: the dnf command is reported" says "system packages: sudo dnf install -y fd-find"
+
+# An unrecognized distro: no package manager, a pointer to the README.
+machine unknown debian
+configured
+installers
+rm "$dir/bin/fd"
+run
+check "unknown distro: no sudo" not_logged '^sudo'
+check "unknown distro: says so" says "isn't recognized"
+
+# A failed install is reported and the rest still runs.
+machine failure fedora
+configured
+installers
+stub sudo 'exit 1'
+rm "$dir/bin/fd" "$dir/bin/black"
+run --yes
+check "failure: exits non-zero" test "$status" -eq 1
+check "failure: lists the failed command" says "failed, fix and rerun"
+check "failure: later steps still run" logged "pipx install black"
+
+if [ "$failures" -gt 0 ]; then
+  echo "$failures failed"
+  exit 1
+fi
+echo "all passed"
