@@ -94,7 +94,7 @@ not_logged() { ! grep -qE -- "$1" "$dir/log"; }
 machine arch-fresh arch
 installers
 run --dry-run
-check "arch: pacman installs the system packages" says "sudo pacman -S --needed --noconfirm neovim"
+check "arch: pacman installs the system packages" says "sudo pacman -Syu --needed --noconfirm neovim"
 check "arch: Arch package names" says "jdk-openjdk"
 check "arch: mermaid-cli comes from pacman" says " mermaid-cli"
 check "arch: no cargo fallback" eval '! says "cargo install"'
