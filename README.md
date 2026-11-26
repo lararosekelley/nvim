@@ -30,8 +30,10 @@ Then install what it needs, as listed under
 ```
 
 It skips anything already installed, asks before installing system packages with
-`dnf` or `pacman`, and ends with a list of anything to install by hand. Pass
-`--dry-run` to see the plan first, or `--yes` to skip the question.
+`dnf` or `pacman`, and ends with a list of anything to install by hand. On Arch,
+saying yes also upgrades the whole system (`pacman -Syu`), since Arch doesn't
+support refreshing its package list without one. Pass `--dry-run` to see the
+plan first, or `--yes` to skip the question.
 
 ### Fonts
 
