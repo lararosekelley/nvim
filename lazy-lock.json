@@ -1,5 +1,5 @@
 {
-  "SchemaStore.nvim": { "branch": "main", "commit": "5926c7899b2e36cd0f944ef3a933abd68c0fcdb8" },
+  "SchemaStore.nvim": { "branch": "main", "commit": "c01d3d7026af6347b03b05dc5972c072a7ed37af" },
   "baleia.nvim": { "branch": "main", "commit": "14c279cc7241d97585f8000dfd7dcdbca9fb4458" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "callie": { "branch": "main", "commit": "094347207aa03ff26aa4fbf340561d6bfeb965fb" },
@@ -50,7 +50,7 @@
   "project.nvim": { "branch": "main", "commit": "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   "recoll.nvim": { "branch": "main", "commit": "d65027ee4090c4e2700f698da3e873f9338e731c" },
   "render-markdown.nvim": { "branch": "main", "commit": "a67f826164c38c836fc6060f32b275c4c43317a7" },
-  "rustaceanvim": { "branch": "master", "commit": "88575b98bb9937fb9983ddec5e532b67e75ce677" },
+  "rustaceanvim": { "branch": "main", "commit": "88575b98bb9937fb9983ddec5e532b67e75ce677" },
   "schema-companion.nvim": { "branch": "main", "commit": "b55ca0d99036950b71344d179af0499d8cfa7719" },
   "snacks.nvim": { "branch": "main", "commit": "882c996cf28183f4d63640de0b4c02ec886d01f2" },
   "vim-eunuch": { "branch": "master", "commit": "929490937745cd96130d3e7948f762f0aa403314" },
