@@ -29,7 +29,7 @@
   "nerdy.nvim": { "branch": "main", "commit": "313260b2dd2054b6fc7327fe70f3e0aa06aa7cb8" },
   "noice.nvim": { "branch": "main", "commit": "7bfd942445fb63089b59f97ca487d605e715f155" },
   "none-ls-extras.nvim": { "branch": "main", "commit": "9a8b8a9aeb43382e5aaf49b00b7cfb5d42d32118" },
-  "none-ls.nvim": { "branch": "main", "commit": "df7be04d6de5781cc5546168aedbae854987f495" },
+  "none-ls.nvim": { "branch": "main", "commit": "838f6f9df491bf0d3e5afc91866a052ed5d6e680" },
   "nui.nvim": { "branch": "main", "commit": "10fc361835c856ba4233ef5ea135b919bf3dce97" },
   "nvim-cmp": { "branch": "main", "commit": "fe29aba4117227a6df637bc41e4b4fb4e98864a0" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "72a05f62c52241bc7441c820eb53946f92b2e6a4" },
